@@ -1,0 +1,150 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Check if the current user is authenticated
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Check if the current user is the participant
+    function userIsParticipant(name, participantData) {
+      return name == participantData.name;
+    }
+
+    // Check if the request only changes the specified fields
+    function onlyChanges(fields) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(fields);
+    }
+
+    // Check if the data matches the meetup schema
+    function isValidMeetup(meetupData) {
+      let hasMeetupId = meetupData.id is string;
+      let hasName = meetupData.name is string;
+      let hasCreatedAt = meetupData.createdAt is timestamp;
+      
+      if (!hasMeetupId || !hasName || !hasCreatedAt) {
+        return false;
+      }
+
+      // Check timeslots are Map<string, string[]>
+      let hasTimeslots = meetupData.timeslots is map;
+
+      if (!hasTimeslots) {
+        return false;
+      }
+
+      let timeslots = meetupData.timeslots;
+      let timeslotValues = timeslots.values();
+      let timeslotValuesAreArrays = timeslotValues.hasOnly([array]);
+
+      if (!timeslotValuesAreArrays) {
+        return false;
+      }
+
+      let timeslotValuesAreStrings = timeslotValues.flatten().hasOnly([string]);
+
+      if (!timeslotValuesAreStrings) {
+        return false;
+      }
+
+      // Check timeslotDescription is Map<string, string>
+      let hasTimeslotDescription = meetupData.timeslotDescription is map;
+
+      if (!hasTimeslotDescription) {
+        return false;
+      }
+
+      let timeslotDescriptionValues = meetupData.timeslotDescription.values();
+      let timeslotDescriptionValuesAreStrings = timeslotDescriptionValues.hasOnly([string]);
+
+      if (!timeslotDescriptionValuesAreStrings) {
+        return false;
+      }
+
+      // Check participantNames is string[]
+      let hasParticipantNames = meetupData.participantNames is array;
+
+      if (!hasParticipantNames) {
+        return false;
+      }
+
+      let participantNamesAreStrings = meetupData.participantNames.hasOnly([string]);
+
+      if (!participantNamesAreStrings) {
+        return false;
+      }
+
+      return true;
+    }
+
+    // Check if the data matches the participant schema
+    function isValidParticipant(participantData) {
+      let hasParticipantId = participantData.id is string;
+      let hasName = participantData.name is string;
+      let hasCreatedAt = participantData.createdAt is timestamp;
+
+      if (!hasParticipantId || !hasName || !hasCreatedAt) {
+        return false;
+      }
+      
+      // Check availability is a Map<string, string[]>
+      let hasAvailability = participantData.availability is map;
+
+      if (!hasAvailability) {
+        return false;
+      }
+
+      let availability = participantData.availability;
+
+      let availabilityValues = availability.values();
+      let availabilityValuesAreArrays = availabilityValues.hasOnly([array]);
+
+      if (!availabilityValuesAreArrays) {
+        return false;
+      }
+
+      let availabilityValuesAreStrings = availabilityValues.flatten().hasOnly([string]);
+
+      if (!availabilityValuesAreStrings) {
+        return false;
+      }
+
+      return true;
+    }
+
+    // Get the names of participants of a meetup
+    function getParticipantNames(meetupId) {
+      return get(/databases/$(database)/documents/meetups/$(meetupId)).data.participantNames;
+    }
+
+    match /meetups/{meetupId} {
+      // Allow anyone to read meetups
+      allow read: if true;
+
+      // Allow creation of meetups if
+      // - the user is signed in
+      // - the user is creating a valid meetup
+      allow create: if isSignedIn() && isValidMeetup(request.resource.data);
+    }
+
+    match /meetups/{meetupId}/participants/{participantId} {
+      // Allow anyone to read participants
+      allow read: if true;
+
+      // Allow updating availability if
+      // - the user is signed in
+      // - the user is the participant
+      // - the request only changes the availability field
+      // - the resulting availability is valid
+      allow update: if isSignedIn() && userIsParticipant(request.token.name, resource.data) && onlyChanges(["availability"]) && isValidParticipant(request.resource.data);
+
+      // Allow creating participant if 
+      // - the user is signed in
+      // - the user is creating a participant for themselves
+      // - the user is creating a valid participant
+      // - the user doesn't already exist in the participants list
+      allow create: if isSignedIn() && userIsParticipant(request.token.name, request.resource.data) && isValidParticipant(request.resource.data) && !(request.token.name in getParticipantNames(meetupId));
+    }
+  }
+}
