@@ -19,98 +19,40 @@ service cloud.firestore {
 
     // Check if the data matches the meetup schema
     function isValidMeetup(meetupData) {
-      let hasMeetupId = meetupData.id is string;
-      let hasName = meetupData.name is string;
-      let hasCreatedAt = meetupData.createdAt is timestamp;
-      
-      if (!hasMeetupId || !hasName || !hasCreatedAt) {
-        return false;
-      }
+      let hasMeetupId = "id" in meetupData && meetupData.id is string;
+      let hasName = "name" in meetupData && meetupData.name is string;
+      let hasCreatedAt = "createdAt" in meetupData && meetupData.createdAt is timestamp;
 
       // Check timeslots are Map<string, string[]>
-      let hasTimeslots = meetupData.timeslots is map;
+      let hasTimeslots = "timeslots" in meetupData && meetupData.timeslots is map;
 
-      if (!hasTimeslots) {
-        return false;
-      }
+      let tslotsVals = meetupData.timeslots.values();
+      let hasValidTimeslots = hasTimeslots && tslotsVals.size() == 0 || (tslotsVals[-1] is list && tslotsVals[-1][-1] is string);
 
-      let timeslots = meetupData.timeslots;
-      let timeslotValues = timeslots.values();
-      let timeslotValuesAreArrays = timeslotValues.hasOnly([array]);
-
-      if (!timeslotValuesAreArrays) {
-        return false;
-      }
-
-      let timeslotValuesAreStrings = timeslotValues.flatten().hasOnly([string]);
-
-      if (!timeslotValuesAreStrings) {
-        return false;
-      }
-
-      // Check timeslotDescription is Map<string, string>
-      let hasTimeslotDescription = meetupData.timeslotDescription is map;
-
-      if (!hasTimeslotDescription) {
-        return false;
-      }
-
-      let timeslotDescriptionValues = meetupData.timeslotDescription.values();
-      let timeslotDescriptionValuesAreStrings = timeslotDescriptionValues.hasOnly([string]);
-
-      if (!timeslotDescriptionValuesAreStrings) {
-        return false;
-      }
+      let hasTimeslotDescription = "timeslotDescription" in meetupData && meetupData.timeslotDescription is map;
+      let descVals = meetupData.timeslotDescription.values();
+      let hasValidTimeslotDescription = hasTimeslotDescription && descVals.size() == 0 || descVals[-1] is string;
 
       // Check participantNames is string[]
-      let hasParticipantNames = meetupData.participantNames is array;
+      let hasParticipantNames = "participantNames" in meetupData && meetupData.participantNames is list;
+      let hasValidParticipantNames = hasParticipantNames && meetupData.participantNames.size() == 0 || meetupData.participantNames[-1] is string;
 
-      if (!hasParticipantNames) {
-        return false;
-      }
-
-      let participantNamesAreStrings = meetupData.participantNames.hasOnly([string]);
-
-      if (!participantNamesAreStrings) {
-        return false;
-      }
-
-      return true;
+      return hasMeetupId && hasName && hasCreatedAt && hasValidTimeslots && hasValidTimeslotDescription && hasValidParticipantNames;
     }
 
     // Check if the data matches the participant schema
     function isValidParticipant(participantData) {
-      let hasParticipantId = participantData.id is string;
-      let hasName = participantData.name is string;
-      let hasCreatedAt = participantData.createdAt is timestamp;
-
-      if (!hasParticipantId || !hasName || !hasCreatedAt) {
-        return false;
-      }
+      let hasParticipantId = "id" in participantData && participantData.id is string;
+      let hasName = "name" in participantData && participantData.name is string;
+      let hasCreatedAt = "createdAt" in participantData && participantData.createdAt is timestamp;
       
       // Check availability is a Map<string, string[]>
-      let hasAvailability = participantData.availability is map;
+      let hasAvailability = "availability" in participantData && participantData.availability is map;
 
-      if (!hasAvailability) {
-        return false;
-      }
+      let availVals = participantData.availability.values();
+      let hasValidAvailability = hasAvailability && availVals.size() == 0 || (availVals[-1] is list && availVals[-1][-1] is string);
 
-      let availability = participantData.availability;
-
-      let availabilityValues = availability.values();
-      let availabilityValuesAreArrays = availabilityValues.hasOnly([array]);
-
-      if (!availabilityValuesAreArrays) {
-        return false;
-      }
-
-      let availabilityValuesAreStrings = availabilityValues.flatten().hasOnly([string]);
-
-      if (!availabilityValuesAreStrings) {
-        return false;
-      }
-
-      return true;
+      return hasParticipantId && hasName && hasCreatedAt && hasValidAvailability;
     }
 
     // Get the names of participants of a meetup
@@ -125,7 +67,7 @@ service cloud.firestore {
       // Allow creation of meetups if
       // - the user is signed in
       // - the user is creating a valid meetup
-      allow create: if isSignedIn() && isValidMeetup(request.resource.data);
+      allow create: if isSignedIn() && onlyChanges(["createdAt", "name", "participantNames", "timeslotDescription", "timeslots"]) && isValidMeetup(request.resource.data);
     }
 
     match /meetups/{meetupId}/participants/{participantId} {
@@ -144,7 +86,7 @@ service cloud.firestore {
       // - the user is creating a participant for themselves
       // - the user is creating a valid participant
       // - the user doesn't already exist in the participants list
-      allow create: if isSignedIn() && userIsParticipant(request.token.name, request.resource.data) && isValidParticipant(request.resource.data) && !(request.token.name in getParticipantNames(meetupId));
+      allow create: if isSignedIn() && userIsParticipant(request.token.name, request.resource.data) && onlyChanges(["availability", "createdAt", "name"]) && isValidParticipant(request.resource.data) && !(request.token.name in getParticipantNames(meetupId));
     }
   }
 }
