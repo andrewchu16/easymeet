@@ -38,14 +38,6 @@ beforeEach(async () => {
 });
 
 describe("Firestore /meetups create rules", () => {
-    it("Anyone can read meetups", async () => {
-        const user = testEnv.unauthenticatedContext();
-        const db = user.firestore();
-
-        const meetupRef = doc(db, "meetups", "meetup1");
-        await assertSucceeds(getDoc(meetupRef));
-    });
-
     it("Only authenticated users can create meetups", async () => {
         // Create an anonymous authenticated user
         const anonUser = testEnv.authenticatedContext("anon");
@@ -54,7 +46,7 @@ describe("Firestore /meetups create rules", () => {
         const meetupData = {
             name: "Meetup #1",
             createdAt: new Date(),
-            participantNames: ["John", "Alice"],
+            participantNames: [],
             timeslots: {
                 "2024-12-31": ["breakfast", "lunch", "dinner"],
                 "2025-01-01": ["breakfast", "dinner"],
@@ -370,3 +362,13 @@ describe("Firestore /meetups create rules", () => {
         await assertFails(addDoc(collection(db, "meetups"), meetupData));
     });
 });
+
+describe("Firestore /meetup read rules", () => {
+    it("Anyone can read meetups", async () => {
+        const user = testEnv.unauthenticatedContext();
+        const db = user.firestore();
+
+        const meetupRef = doc(db, "meetups", "meetup1");
+        await assertSucceeds(getDoc(meetupRef));
+    });
+})
