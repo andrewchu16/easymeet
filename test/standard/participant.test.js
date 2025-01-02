@@ -36,7 +36,7 @@ after(async () => {
 beforeEach(async () => {
     await testEnv.clearFirestore();
 
-    testEnv.withSecurityRulesDisabled(async (context) => {
+    await testEnv.withSecurityRulesDisabled(async (context) => {
         const db = context.firestore();
 
         const meetupData = {
@@ -334,7 +334,7 @@ describe("Firestore /meetups/{meetupId}/participants write rules", () => {
 
         await assertFails(setDoc(participantRef, participantData));
     });
-    
+
     it("Cannot create a participant with a name that already exists in the meetup", async () => {
         const user = testEnv.authenticatedContext("Alice");
         const db = user.firestore();
@@ -385,5 +385,131 @@ describe("Firestore /meetups/{meetupId}/participants/{participantId} update rule
         };
 
         await assertSucceeds(updateDoc(participantRef, participantData));
+    });
+
+    it("Authenticated users cannot update other participants' availability", async () => {
+        const user = testEnv.authenticatedContext("Alice");
+        const db = user.firestore();
+
+        const participantRef = doc(
+            db,
+            "meetups",
+            "meetup1",
+            "participants",
+            "participant1"
+        );
+
+        const participantData = {
+            availability: {
+                "2024-12-31": ["breakfast", "lunch"],
+                "2025-01-01": ["breakfast", "dinner"],
+                "2025-01-02": ["lunch"],
+            },
+        };
+
+        await assertFails(updateDoc(participantRef, participantData));
+    });
+
+    it("Participant names cannot be updated", async () => {
+        const user = testEnv.authenticatedContext("John");
+        const db = user.firestore();
+
+        const participantRef = doc(
+            db,
+            "meetups",
+            "meetup1",
+            "participants",
+            "participant1"
+        );
+
+        const participantData = {
+            name: "Alice",
+        };
+
+        await assertFails(updateDoc(participantRef, participantData));
+    });
+
+    it("Participant createdAt dates cannot be updated", async () => {
+        const user = testEnv.authenticatedContext("John");
+        const db = user.firestore();
+
+        const participantRef = doc(
+            db,
+            "meetups",
+            "meetup1",
+            "participants",
+            "participant1"
+        );
+
+        const participantData = {
+            createdAt: new Date(),
+        };
+
+        await assertFails(updateDoc(participantRef, participantData));
+    });
+
+    it("Participant data cannot be updated to a non-map availability", async () => {
+        const user = testEnv.authenticatedContext("John");
+        const db = user.firestore();
+
+        const participantRef = doc(
+            db,
+            "meetups",
+            "meetup1",
+            "participants",
+            "participant1"
+        );
+
+        const participantData = {
+            availability: "2024-12-31",
+        };
+
+        await assertFails(updateDoc(participantRef, participantData));
+    });
+
+    it("Participant data cannot be updated to a non-array availability value", async () => {
+        const user = testEnv.authenticatedContext("John");
+        const db = user.firestore();
+
+        const participantRef = doc(
+            db,
+            "meetups",
+            "meetup1",
+            "participants",
+            "participant1"
+        );
+
+        const participantData = {
+            availability: {
+                "2024-12-31": "breakfast",
+                "2025-01-01": "dinner",
+                "2025-01-02": "lunch",
+            },
+        };
+
+        await assertFails(updateDoc(participantRef, participantData));
+    });
+
+    it("Participant data cannot be updated to a non-string availability array value", async () => {
+        const user = testEnv.authenticatedContext("Alice");
+        const db = user.firestore();
+
+        const participantRef = doc(
+            db,
+            "meetups",
+            "meetup1",
+            "participants",
+            "participant2"
+        );
+
+        const participantData = {
+            availability: {
+                "2024-12-31": [123],
+                "2025-01-01": ["dinner"],
+                "2025-01-02": ["lunch"],
+            },
+        };
+
+        await assertFails(updateDoc(participantRef, participantData));
     });
 });

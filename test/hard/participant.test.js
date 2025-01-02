@@ -3,7 +3,14 @@ import {
     assertSucceeds,
     initializeTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { setDoc, getDoc, doc, addDoc, collection, updateDoc } from "firebase/firestore";
+import {
+    setDoc,
+    getDoc,
+    doc,
+    addDoc,
+    collection,
+    updateDoc,
+} from "firebase/firestore";
 import fs from "fs";
 import { setLogLevel } from "@firebase/logger";
 
@@ -36,7 +43,7 @@ after(async () => {
 beforeEach(async () => {
     await testEnv.clearFirestore();
 
-    testEnv.withSecurityRulesDisabled(async (context) => {
+    await testEnv.withSecurityRulesDisabled(async (context) => {
         const db = context.firestore();
 
         const meetupData = {
@@ -97,7 +104,7 @@ describe("Firestore /meetups/{meetupId}/participants write rules", () => {
             createdAt: new Date(),
             availability: {
                 "2024-12-31": ["breakfast"],
-                "2025-01-01": [123],
+                "2025-01-01": "dinner",
                 "2025-01-02": ["lunch"],
             },
         };
@@ -131,4 +138,52 @@ describe("Firestore /meetups/{meetupId}/participants write rules", () => {
     });
 
     // todo: Cannot create a participant with an availability that is not a subset of the meetup's timeslots
+});
+
+describe("Firestore /meetups/{meetupId}/participants/{participantId} update rules", () => {
+    it("Participant data cannot be updated to a non-array availability value (error value in non-zero index)", async () => {
+        const user = testEnv.authenticatedContext("John");
+        const db = user.firestore();
+
+        const participantRef = doc(
+            db,
+            "meetups",
+            "meetup1",
+            "participants",
+            "participant1"
+        );
+
+        const participantData = {
+            availability: {
+                "2024-12-31": ["breakfast"],
+                "2025-01-01": "dinner",
+                "2025-01-02": "lunch",
+            },
+        };
+
+        await assertFails(updateDoc(participantRef, participantData));
+    });
+
+    it("Participant data cannot be updated to a non-string availability array value (error value in non-zero index)", async () => {
+        const user = testEnv.authenticatedContext("John");
+        const db = user.firestore();
+
+        const participantRef = doc(
+            db,
+            "meetups",
+            "meetup1",
+            "participants",
+            "participant1"
+        );
+
+        const participantData = {
+            availability: {
+                "2024-12-31": ["breakfast"],
+                "2025-01-01": [123],
+                "2025-01-02": ["lunch"],
+            },
+        };
+
+        await assertFails(updateDoc(participantRef, participantData));
+    });
 });

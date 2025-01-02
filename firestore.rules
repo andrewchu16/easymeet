@@ -83,7 +83,10 @@ service cloud.firestore {
       // - the user is the participant
       // - the request only changes the availability field
       // - the resulting availability is valid
-      allow update: if isSignedIn() && userIsParticipant(request.auth.token.sub, resource.data) && onlyChanges(["availability"]) && isValidParticipant(request.resource.data);
+      allow update: if isSignedIn()
+      && userIsParticipant(request.auth.token.sub, resource.data) 
+      && onlyChanges(["availability"]) 
+      && isValidParticipant(request.resource.data);
 
       // Allow creating participant if 
       // - the user is signed in
