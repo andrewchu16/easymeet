@@ -3,7 +3,7 @@ import {
     assertSucceeds,
     initializeTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { setDoc, getDoc, doc, addDoc, collection, updateDoc } from "firebase/firestore";
+import { setDoc, getDoc, doc, addDoc, collection, updateDoc, getDocs } from "firebase/firestore";
 import fs from "fs";
 import { setLogLevel } from "@firebase/logger";
 
@@ -80,7 +80,7 @@ beforeEach(async () => {
 });
 
 describe("Firestore /meetups/{meetupId}/participants read rules", () => {
-    it("Anyone can read participant data", async () => {
+    it("Anyone can get specific participant data", async () => {
         const user = testEnv.unauthenticatedContext();
         const db = user.firestore();
 
@@ -92,6 +92,14 @@ describe("Firestore /meetups/{meetupId}/participants read rules", () => {
             "participant1"
         );
         await assertSucceeds(getDoc(participantRef));
+    });
+
+    it("Anyone can list all participant data", async () => {
+        const user = testEnv.unauthenticatedContext();
+        const db = user.firestore();
+
+        const participantsRef = collection(db, "meetups", "meetup1", "participants");
+        await assertSucceeds(getDocs(participantsRef));
     });
 });
 

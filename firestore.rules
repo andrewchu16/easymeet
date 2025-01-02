@@ -65,8 +65,8 @@ service cloud.firestore {
     }
 
     match /meetups/{meetupId} {
-      // Allow anyone to read meetups
-      allow read: if true;
+      // Allow anyone to get meetups, but not list them
+      allow get: if true;
 
       // Allow creation of meetups if
       // - the user is signed in

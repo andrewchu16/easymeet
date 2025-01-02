@@ -3,7 +3,14 @@ import {
     assertSucceeds,
     initializeTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { setDoc, getDoc, doc, addDoc, collection } from "firebase/firestore";
+import {
+    setDoc,
+    getDoc,
+    doc,
+    addDoc,
+    collection,
+    getDocs,
+} from "firebase/firestore";
 import fs from "fs";
 import { setLogLevel } from "@firebase/logger";
 
@@ -292,11 +299,19 @@ describe("Firestore /meetups create rules", () => {
 });
 
 describe("Firestore /meetup read rules", () => {
-    it("Anyone can read meetups", async () => {
+    it("Anyone can get a meetup", async () => {
         const user = testEnv.unauthenticatedContext();
         const db = user.firestore();
 
         const meetupRef = doc(db, "meetups", "meetup1");
         await assertSucceeds(getDoc(meetupRef));
     });
-})
+
+    it("Cannot list all meetups", async () => {
+        const user = testEnv.authenticatedContext("John");
+        const db = user.firestore();
+
+        const meetupsRef = collection(db, "meetups");
+        await assertFails(getDocs(meetupsRef));
+    });
+});
