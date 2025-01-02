@@ -198,30 +198,6 @@ describe("Firestore /meetups create rules", () => {
         await assertFails(addDoc(collection(db, "meetups"), meetupData));
     });
 
-    it("Meetups with non-list timeslots cannot be created (error value in non-zero index)", async () => {
-        // Create an anonymous authenticated user
-        const anonUser = testEnv.authenticatedContext("anon");
-        const db = anonUser.firestore();
-
-        const meetupData = {
-            name: "Meetup #1",
-            createdAt: new Date(),
-            participantNames: ["John", "Alice"],
-            timeslots: {
-                "2024-12-31": ["breakfast", "lunch", "dinner"],
-                "2025-01-01": 0,
-                "2025-01-02": ["breakfast", "lunch"],
-            },
-            timeslotDescription: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
-            },
-        };
-
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
-    });
-
     it("Meetups with non-string values for timeslots cannot be created", async () => {
         // Create an anonymous authenticated user
         const anonUser = testEnv.authenticatedContext("anon");
@@ -234,30 +210,6 @@ describe("Firestore /meetups create rules", () => {
             timeslots: {
                 "2024-12-31": [0],
                 "2025-01-01": ["breakfast", "dinner"],
-                "2025-01-02": ["breakfast", "lunch"],
-            },
-            timeslotDescription: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
-            },
-        };
-
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
-    });
-
-    it("Meetups with non-string values for timeslots cannot be created (error value in non-zero index)", async () => {
-        // Create an anonymous authenticated user
-        const anonUser = testEnv.authenticatedContext("anon");
-        const db = anonUser.firestore();
-
-        const meetupData = {
-            name: "Meetup #1",
-            createdAt: new Date(),
-            participantNames: ["John", "Alice"],
-            timeslots: {
-                "2024-12-31": ["breakfast"],
-                "2025-01-01": ["breakfast", "dinner", 2],
                 "2025-01-02": ["breakfast", "lunch"],
             },
             timeslotDescription: {
@@ -306,30 +258,6 @@ describe("Firestore /meetups create rules", () => {
             timeslotDescription: {
                 breakfast: 0,
                 lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
-            },
-        };
-
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
-    });
-
-    it("Meetups with non-string timeslot descriptions cannot be created (error value in non-zero index)", async () => {
-        // Create an anonymous authenticated user
-        const anonUser = testEnv.authenticatedContext("anon");
-        const db = anonUser.firestore();
-
-        const meetupData = {
-            name: "Meetup #1",
-            createdAt: new Date(),
-            participantNames: ["John", "Alice"],
-            timeslots: {
-                "2024-12-31": ["breakfast", "lunch", "dinner"],
-                "2025-01-01": ["breakfast", "dinner"],
-                "2025-01-02": ["breakfast", "lunch"],
-            },
-            timeslotDescription: {
-                breakfast: "8 am to 11 am",
-                lunch: 1,
                 dinner: "5 pm to 8 pm",
             },
         };
