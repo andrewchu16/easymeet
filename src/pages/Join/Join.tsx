@@ -2,11 +2,11 @@ import { useParams } from "react-router-dom";
 import MeetNotFound from "../MeetNotFound/MeetNotFound";
 
 const checkMeetId = (meetId: string) => {
-    return true;
+    return typeof meetId === "string";
 };
 
 const Join = () => {
-    let { meetId } = useParams();
+    const { meetId } = useParams();
 
     if (!meetId || !checkMeetId(meetId)) {
         return <MeetNotFound />;
