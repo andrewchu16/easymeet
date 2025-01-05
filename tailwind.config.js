@@ -3,9 +3,17 @@ export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         fontFamily: {
-          sans: ['Albert Sans', 'Calibri', 'Arial', 'sans-serif'],
+            sans: ["Albert Sans", "Calibri", "Arial", "sans-serif"],
         },
-        extend: {},
+        extend: {
+          colors: {
+            dark: "#404040",
+            light: "#ffffff",
+            body: "#6A6A6A",
+            lightgray: "#EFEFEF",
+            primary: "#6BCB96"
+          }
+        },
     },
     plugins: [],
 };
