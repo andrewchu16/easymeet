@@ -4,9 +4,19 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'firestore.rules'
+      - 'firestore.indexes.json'
+      - 'functions/src/**'
+      - 'tests/**'
   pull_request:
     branches:
       - main
+    paths:
+      - 'firestore.rules'
+      - 'firestore.indexes.json'
+      - 'functions/src/**'
+      - 'tests/**'
 
 jobs:
   test-standard:
