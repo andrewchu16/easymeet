@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test-standard": "mocha \"test/standard/**/*.test.js\"",
-    "test-hard": "mocha \"test/hard/**/*.test.js\""
+    "test-hard": "mocha \"test/hard/**/*.test.js\"",
+    "deploy-rules": "firebase deploy --only firestore:rules"
   },
   "dependencies": {
     "@firebase/firestore": "^4.7.5",
