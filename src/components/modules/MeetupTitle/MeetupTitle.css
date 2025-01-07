@@ -1,0 +1,19 @@
+.meetup-title {
+    @apply text-4xl font-bold focus:outline-none focus:bg-lightgray;
+}
+
+div:has(> .meetup-title:focus) {
+    @apply bg-lightgray;
+}
+
+.meetup-title-icon {
+    @apply hover:font-semibold font-medium;
+}
+
+.meetup-title:focus + .meetup-title-icon {
+    @apply hidden;
+}
+
+.meetup-title.is-editable:not(:focus) {
+    @apply decoration-dotted underline underline-offset-4;
+}
