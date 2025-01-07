@@ -1,5 +1,4 @@
 export default interface Participant {
-    participantId: string;
     name: string;
     createdAt: Date;
     availability: Map<string, string[]>;

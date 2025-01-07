@@ -1,5 +1,4 @@
 export default interface Meetup {
-    meeetupId: string;
     name: string;
     createdAt: Date;
     timeslots: Map<string, string[]>;
