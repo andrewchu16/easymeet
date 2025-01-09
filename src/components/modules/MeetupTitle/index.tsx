@@ -35,7 +35,7 @@ const MeetupTitle = ({
     };
 
     return (
-        <div className="flex items-center gap-2 rounded-lg px-2.5 py-1.5">
+        <div className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 meetup-title-container ml-6">
             <h1
                 ref={titleRef}
                 suppressContentEditableWarning

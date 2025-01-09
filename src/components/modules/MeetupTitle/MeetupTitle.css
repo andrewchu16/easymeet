@@ -1,9 +1,13 @@
+.meetup-title-container {
+    @apply text-dark decoration-dark;
+}
+
 .meetup-title {
     @apply text-4xl font-bold focus:outline-none focus:bg-lightgray;
 }
 
 div:has(> .meetup-title:focus) {
-    @apply bg-lightgray;
+    @apply bg-lightgray mx-0;
 }
 
 .meetup-title-icon {
