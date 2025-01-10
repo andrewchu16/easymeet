@@ -11,6 +11,8 @@ export default {
                 light: "#ffffff",
                 body: "#6A6A6A",
                 lightgray: "#EFEFEF",
+
+                // Greens
                 primary: "#6BCB96",
                 secondary: "#95d5b2",
                 tertiary: "#6bcb96",

@@ -68,7 +68,7 @@ const TimeslotsEdit = ({
                             }}
                         />
                         <button
-                            className="bg-red-200 rounded-xl p-3 flex items-center justify-center active:bg-red-400 transition-colors"
+                            className="bg-red-200 rounded-xl p-3 flex items-center justify-center active:bg-red-400 transition-colors active:font-semibold"
                             onClick={() => {
                                 handleDeleteTimeslot(index);
                             }}
