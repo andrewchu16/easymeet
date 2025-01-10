@@ -82,7 +82,7 @@ const TimeslotsEdit = ({
                 ))}
             </ul>
             <button
-                className="mt-0.5 rounded-full text-light bg-primary py-3 px-4 hover:brightness-110 active:brightness-110 transition-all flex items-center justify-center"
+                className="mt-2 rounded-full text-dark hover:brightness-110 active:brightness-110 transition-all flex items-center justify-center"
                 onClick={addTimeslot}
             >
                 <MaterialSymbol icon="add" size={22} /> Add timeslot
