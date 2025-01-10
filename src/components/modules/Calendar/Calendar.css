@@ -1,0 +1,55 @@
+.cldr-today > .cldr-day-button {
+    @apply bg-lightgray text-dark p-1;
+}
+
+.cldr-selected > .cldr-day-button {
+    background: linear-gradient(
+        90deg,
+        var(--color-secondary),
+        var(--color-tertiary)
+    );
+
+    @apply text-light;
+}
+
+.cldr-chevron {
+    @apply active:scale-150 transition-transform;
+}
+
+.cldr-root {
+    @apply text-dark w-fit;
+}
+
+.cldr-nav {
+    height: 50px;
+    @apply text-center absolute right-0 flex items-center z-10;
+}
+
+.cldr-dropdown option {
+    @apply hover:bg-lightgray checked:bg-lightgray text-sm !important;
+}
+
+.cldr-outside > .cldr-day-button {
+    @apply text-gray-300;
+}
+
+.cldr-weekday {
+    @apply text-tertiary text-lg brightness-90;
+}
+
+.cldr-day {
+    @apply p-1 m-0 text-center;
+}
+
+.cldr-day-button {
+    @apply w-11 aspect-square rounded-full p-2;
+}
+
+.cldr-month-caption {
+    height: 50px;
+    @apply flex items-center p-3;
+}
+
+.cldr-dropdowns {
+    @apply flex gap-2;
+}
