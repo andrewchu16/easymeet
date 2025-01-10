@@ -1,9 +1,19 @@
-const TimeslotDefintions = () => {
-    return (
-        <div>
-        TimeslotDefintions
-        </div>
-    );
+interface TimeslotDescription {
+    name: string;
+    description: string;
 }
 
-export default TimeslotDefintions;
+interface TimeslotDescriptionsProps {
+    descriptions: TimeslotDescription[];
+    onDescriptionsChange: (timeslotDescriptions: TimeslotDescription[]) => void;
+}
+
+const TimeslotDescriptions = ({
+    descriptions,
+    onDescriptionsChange,
+}: TimeslotDescriptionsProps) => {
+    return <div>TimeslotDescriptions</div>;
+};
+
+export default TimeslotDescriptions;
+export type { TimeslotDescription };

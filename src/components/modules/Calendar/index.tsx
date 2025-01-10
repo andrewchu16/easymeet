@@ -6,10 +6,10 @@ import CalendarChevron from "./components/CalendarChevron";
 
 interface CalendarProps {
     dates: Date[];
-    setDates: (dates: Date[]) => void;
+    onDatesChange: (dates: Date[]) => void;
 }
 
-const Calendar = ({ dates, setDates }: CalendarProps) => {
+const Calendar = ({ dates, onDatesChange }: CalendarProps) => {
     const defaultClassNames = getDefaultClassNames();
 
     // 5 years ago
@@ -27,7 +27,7 @@ const Calendar = ({ dates, setDates }: CalendarProps) => {
             startMonth={startMonth}
             endMonth={endMonth}
             selected={dates}
-            onSelect={setDates}
+            onSelect={onDatesChange}
             captionLayout="dropdown"
             showOutsideDays
             classNames={{

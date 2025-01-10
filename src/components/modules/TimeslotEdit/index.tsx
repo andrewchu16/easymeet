@@ -1,15 +1,21 @@
+interface Timeslot {
+    date: Date;
+    timeslots: string[];
+    enabled: boolean;
+}
 interface TimeslotEditProps {
-    timeslots: Map<string, string[]>;
-    setTimeslots: (timeslots: Map<string, string[]>) => void;
+    timeslots: Timeslot[];
+    onTimeslotsChange: (timeslots: Timeslot[]) => void;
 }
 
-const TimeslotEdit = ({ timeslots, setTimeslots }: TimeslotEditProps) => {
+const TimeslotEdit = ({ timeslots, onTimeslotsChange }: TimeslotEditProps) => {
     return (
         <div>
             <h1>TimeslotEdit</h1>
-            {timeslots}
+            {timeslots.toString()}
         </div>
     );
 };
 
 export default TimeslotEdit;
+export type { Timeslot };
