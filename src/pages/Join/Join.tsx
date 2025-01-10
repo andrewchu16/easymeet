@@ -9,7 +9,7 @@ const Join = () => {
     const { meetId } = useParams();
 
     if (!meetId || !checkMeetId(meetId)) {
-        return <MeetNotFound />;
+        return <MeetNotFound id={meetId} />;
     }
 
     return <div>Join meet {meetId}</div>;
