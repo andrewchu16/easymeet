@@ -1,12 +1,9 @@
 import { useState } from "react";
-import MeetupTitle from "../../components/modules/MeetupTitle";
-import Calendar from "../../components/modules/Calendar";
-import TimeslotsEdit from "../../components/modules/TimeslotsEdit";
 import { Timeslot } from "../../models/timeslot.model";
-import { defaultTimeslots } from "../../data/timeslots";
-import AvailabilityEdit from "../../components/modules/AvailabilityEdit";
 import { Availability, TimeslotInfo } from "../../models/availability.model";
+import { defaultTimeslots } from "../../data/timeslots";
 import { getRandomId } from "../../util/getRandomId";
+import { MeetupTitle, Calendar, TimeslotsEdit, AvailabilityEdit } from "../../components/modules";
 
 const Create = () => {
     const [meetupTitle, setMeetupTitle] = useState("New Meetup");
