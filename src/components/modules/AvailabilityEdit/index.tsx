@@ -5,11 +5,26 @@ interface TimeslotEditProps {
     onAvailabilityChange: (timeslots: Availability[]) => void;
 }
 
-const AvailabilityEdit = ({ availability, onAvailabilityChange }: TimeslotEditProps) => {
+const AvailabilityEdit = ({
+    availability,
+    onAvailabilityChange,
+}: TimeslotEditProps) => {
+    const enabledAvailabilities = availability.filter((availValue) => availValue.enabled);
+
+    const getReadableDate = (date: Date) => {
+        // Monday, Jan. 1
+        return date.toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "short",
+            day: "numeric",
+        });
+    }
+
     return (
-        <div>
-            <h1>Avaiability edit</h1>
-            {availability.toString()}
+        <div className="flex flex-col gap-4">
+            {enabledAvailabilities.map((availValue, index) => (
+                <h2 key={availValue.id} className="font-bold text-lg">{getReadableDate(availValue.date)}</h2>
+            ))}
         </div>
     );
 };

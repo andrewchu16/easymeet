@@ -6,6 +6,7 @@ import { Timeslot } from "../../models/timeslot.model";
 import { defaultTimeslots } from "../../data/timeslots";
 import AvailabilityEdit from "../../components/modules/AvailabilityEdit";
 import { Availability, TimeslotInfo } from "../../models/availability.model";
+import { getRandomId } from "../../util/getRandomId";
 
 const Create = () => {
     const [meetupTitle, setMeetupTitle] = useState("New Meetup");
@@ -18,8 +19,9 @@ const Create = () => {
     };
 
     const handleDatesChange = (newDates: Date[]) => {
-        newDates.sort();
+        newDates.sort((a, b) => a.getTime() - b.getTime());
 
+        // Update existing availability to match the new dates
         const newAvailability = availability.map((availValue) => {
             // Make sure all the timeslots are enabled
             if (newDates.includes(availValue.date)) {
@@ -35,6 +37,26 @@ const Create = () => {
                 enabled: false,
             };
         });
+
+        // Add new dates to availability
+        newDates.forEach((date) => {
+            if (
+                !newAvailability.some((availValue) => availValue.date === date)
+            ) {
+                newAvailability.push({
+                    date,
+                    enabled: true,
+                    timeslots: timeslots.map((t) => ({
+                        name: t.name,
+                        enabled: false,
+                        id: getRandomId(),
+                    })),
+                    id: getRandomId(),
+                });
+            }
+        });
+
+        newAvailability.sort((a, b) => a.date.getTime() - b.date.getTime());
 
         setDates(newDates);
         setAvailability(newAvailability);
@@ -62,6 +84,7 @@ const Create = () => {
                         newTimeslotsInfo.push({
                             name: newTimeslot.name,
                             enabled: false,
+                            id: getRandomId(),
                         });
                     }
                 });

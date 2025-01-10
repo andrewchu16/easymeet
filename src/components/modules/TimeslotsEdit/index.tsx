@@ -1,5 +1,6 @@
 import { MaterialSymbol } from "react-material-symbols";
 import { Timeslot } from "../../../models/timeslot.model";
+import { getRandomId } from "../../../util/getRandomId";
 
 interface TimeslotsEditProps {
     timeslots: Timeslot[];
@@ -28,7 +29,7 @@ const TimeslotsEdit = ({
         const newTimeslot: Timeslot = {
             name: "",
             description: "",
-            id: (Math.random() + 1).toString(36).substring(7),
+            id: getRandomId(),
         };
         onTimeslotsChange([...timeslots, newTimeslot]);
     };
@@ -80,13 +81,13 @@ const TimeslotsEdit = ({
                         </button>
                     </li>
                 ))}
+                <button
+                    className="rounded-full text-dark active:font-semibold hover:brightness-110 active:brightness-110 transition-all flex items-center justify-center h-12"
+                    onClick={addTimeslot}
+                >
+                    <MaterialSymbol icon="add" size={22} /> Add timeslot
+                </button>
             </ul>
-            <button
-                className="mt-2 rounded-full text-dark hover:brightness-110 active:brightness-110 transition-all flex items-center justify-center"
-                onClick={addTimeslot}
-            >
-                <MaterialSymbol icon="add" size={22} /> Add timeslot
-            </button>
         </>
     );
 };
