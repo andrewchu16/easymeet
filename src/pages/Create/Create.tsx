@@ -1,26 +1,85 @@
 import { useState } from "react";
 import MeetupTitle from "../../components/modules/MeetupTitle";
 import Calendar from "../../components/modules/Calendar";
-import TimeslotDescriptions, {
-    TimeslotDescription,
-} from "../../components/modules/TimeslotDefinitions";
-import TimeslotEdit, { Timeslot } from "../../components/modules/TimeslotEdit";
+import TimeslotsEdit, {
+    Timeslot,
+} from "../../components/modules/TimeslotsEdit";
+import AvailabilityEdit, {
+    Availability,
+} from "../../components/modules/AvailabilityEdit";
 
 const Create = () => {
     const [meetupTitle, setMeetupTitle] = useState("New Meetup");
     const [dates, setDates] = useState<Date[]>([]);
-    const [timeslotDescriptions, setTimeslotDescriptions] = useState<
-        TimeslotDescription[]
-    >([]);
     const [timeslots, setTimeslots] = useState<Timeslot[]>([]);
+    const [availability, setAvailability] = useState<Availability[]>([]);
 
     const handleTitleChange = (event: React.FormEvent<HTMLDivElement>) => {
         setMeetupTitle(event.currentTarget.textContent || "");
     };
 
-    const handleDatesChange = (dates: Date[]) => {
-        setDates(dates);
-    }
+    const handleDatesChange = (newDates: Date[]) => {
+        newDates.sort();
+
+        const newAvailability = availability.map((availValue) => {
+            // Make sure all the timeslots are enabled
+            if (newDates.includes(availValue.date)) {
+                return {
+                    ...availValue,
+                    enabled: true,
+                };
+            }
+
+            // Disable timeslot if the date is not in the new dates
+            return {
+                ...availValue,
+                enabled: false,
+            };
+        });
+
+        setDates(newDates);
+        setAvailability(newAvailability);
+    };
+
+    const handleTimeslotChange = (newTimeslots: Timeslot[]) => {
+        const newAvailability: Availability[] = availability.map(
+            (availValue) => {
+                // Remove deleted timeslots from all availabity dates
+                let newTimeslotsInfo = availValue.timeslots.filter(
+                    (t) =>
+                        !newTimeslots.some(
+                            (newTimeslot) => newTimeslot.name === t.name
+                        )
+                );
+
+                // Add new timeslots to all availability dates
+                newTimeslots.forEach((newTimeslot) => {
+                    if (
+                        !newTimeslotsInfo.some(
+                            (t) => t.name === newTimeslot.name
+                        )
+                    ) {
+                        newTimeslotsInfo.push({
+                            name: newTimeslot.name,
+                            enabled: false,
+                        });
+                    }
+                });
+
+                return {
+                    ...availValue,
+                    timeslots: newTimeslotsInfo,
+                };
+            }
+        );
+
+        setTimeslots(newTimeslots);
+        setAvailability(newAvailability);
+    };
+
+    const handleAvailabilityChange = (newAvailability: Availability[]) => {
+        setAvailability(newAvailability);
+    };
 
     return (
         <div className="flex flex-col gap-2">
@@ -44,25 +103,25 @@ const Create = () => {
                         <h2 className="text-lg text-body font-medium">
                             Select available timeslots
                         </h2>
-                        <TimeslotDescriptions
-                            descriptions={timeslotDescriptions}
-                            onDescriptionsChange={setTimeslotDescriptions}
+                        <TimeslotsEdit
+                            timeslots={timeslots}
+                            onTimeslotsChange={handleTimeslotChange}
                         />
                     </section>
                 )}
             </div>
-            {dates.length > 0 && timeslotDescriptions.length > 0 && (
+            {dates.length > 0 && timeslots.length > 0 && (
                 <section className="py-7 px-4  bg-lightgray w-full rounded-t-[40px]">
                     <h2 className="text-lg text-body">Timeslots Available</h2>
-                    <TimeslotEdit
-                        timeslots={timeslots}
-                        onTimeslotsChange={setTimeslots}
+                    <AvailabilityEdit
+                        availability={availability}
+                        onAvailabilityChange={handleAvailabilityChange}
                     />
                 </section>
             )}
             {dates.length > 0 &&
-                timeslotDescriptions.length > 0 &&
-                timeslots.length > 0 && (
+                timeslots.length > 0 &&
+                availability.length > 0 && (
                     <button className="w-full py-3 bg-primary text-white rounded-[10px]">
                         Let's meet!
                     </button>
