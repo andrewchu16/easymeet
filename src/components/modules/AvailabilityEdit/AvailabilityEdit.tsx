@@ -1,4 +1,5 @@
 import { Availability } from "../../../models/availability.model";
+import DayAvailability from "./components/DayAvailability";
 
 interface TimeslotEditProps {
     availability: Availability[];
@@ -9,23 +10,51 @@ const AvailabilityEdit = ({
     availability,
     onAvailabilityChange,
 }: TimeslotEditProps) => {
-    const enabledAvailabilities = availability.filter((availValue) => availValue.enabled);
+    const enabledAvailabilities = availability.filter(
+        (availValue) => availValue.enabled
+    );
+    
 
-    const getReadableDate = (date: Date) => {
-        // Monday, Jan. 1
-        return date.toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "short",
-            day: "numeric",
+    const setEnableAll = (isEnabled: boolean) => {
+        const newAvailabilities = availability.map((availValue) => {
+            const newTimeslotInfo = availValue.timeslots.map((info) => ({
+                ...info,
+                enabled: isEnabled,
+            }));
+
+            return {
+                ...availValue,
+                timeslots: newTimeslotInfo,
+            };
         });
+        onAvailabilityChange(newAvailabilities);
     }
 
+
     return (
-        <div className="flex flex-col gap-4">
-            {enabledAvailabilities.map((availValue, index) => (
-                <h2 key={availValue.id} className="font-bold text-lg">{getReadableDate(availValue.date)}</h2>
-            ))}
-        </div>
+        <>
+            <div className="text-dark flex gap-2 justify-center mb-0.5">
+                <button className="font-semibold active:font-bold" onClick={() => setEnableAll(true)}>
+                    Select all
+                </button>
+                <button className="font-semibold active:font-bold" onClick={() => setEnableAll(false)}>
+                    Deselect all
+                </button>
+            </div>
+            <ul className="flex flex-col gap-4 w-full">
+                {enabledAvailabilities.map((availValue, index) => (
+                    <DayAvailability
+                        availability={availValue}
+                        onAvailabilityChange={(newAvailability) => {
+                            const newAvailabilities = [...availability];
+                            newAvailabilities[index] = newAvailability;
+                            onAvailabilityChange(newAvailabilities);
+                        }}
+                        key={availValue.id}
+                    />
+                ))}
+            </ul>
+        </>
     );
 };
 

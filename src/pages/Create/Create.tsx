@@ -26,7 +26,11 @@ const Create = () => {
         // Update existing availability to match the new dates
         const newAvailability = availability.map((availValue) => {
             // Make sure all the timeslots are enabled
-            if (newDates.includes(availValue.date)) {
+            if (
+                newDates.some(
+                    (date) => date.getTime() === availValue.date.getTime()
+                )
+            ) {
                 return {
                     ...availValue,
                     enabled: true,
@@ -43,7 +47,9 @@ const Create = () => {
         // Add new dates to availability
         newDates.forEach((date) => {
             if (
-                !newAvailability.some((availValue) => availValue.date === date)
+                !newAvailability.some(
+                    (availValue) => availValue.date.getTime() === date.getTime()
+                )
             ) {
                 newAvailability.push({
                     date,
@@ -59,6 +65,9 @@ const Create = () => {
         });
 
         newAvailability.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+        console.log(newDates.map((d) => d.getTime()));
+        console.log(newAvailability);
 
         setDates(newDates);
         setAvailability(newAvailability);
