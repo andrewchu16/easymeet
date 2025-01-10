@@ -1,22 +1,25 @@
+import { Availability } from "./availability.model";
+import { Timeslot } from "./timeslot.model";
+
 export default interface Meetup {
     name: string;
     createdAt: Date;
-    timeslots: Map<string, string[]>;
-    timeslotDescription: Map<string, string>;
+    availability: Availability[];
+    timeslots: Timeslot[];
     participantNames: string[];
 }
 
 /*
+Firebase Firestore structure:
 {
-    "meetupId": "123",
     "name": "My Meetup",
     "createdAt": "2021-08-01T00:00:00Z",
-    "timeslots": {
+    "availability": {
         "2021-08-01": ["breakfast", "lunch", "dinner"],
         "2021-08-02": ["breakfast", "dinner"],
         "2021-08-03": ["lunch", "dinner"]
     },
-    "timeslotDescription": {
+    "timeslots": {
         "breakfast": "8 to 11 am",
         "lunch": "12 pm",
         "dinner": "6 pm"

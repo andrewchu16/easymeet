@@ -38,7 +38,7 @@ beforeEach(async () => {
 });
 
 describe("Firestore /meetups create rules", () => {
-    it("Meetups with non-list timeslots cannot be created (error value in non-zero index)", async () => {
+    it("Meetups with non-list availability cannot be created (error value in non-zero index)", async () => {
         // Create an anonymous authenticated user
         const anonUser = testEnv.authenticatedContext("anon");
         const db = anonUser.firestore();
@@ -47,12 +47,12 @@ describe("Firestore /meetups create rules", () => {
             name: "Meetup #1",
             createdAt: new Date(),
             participantNames: ["John", "Alice"],
-            timeslots: {
+            availability: {
                 "2024-12-31": ["breakfast", "lunch", "dinner"],
                 "2025-01-01": 0,
                 "2025-01-02": ["breakfast", "lunch"],
             },
-            timeslotDescription: {
+            timeslots: {
                 breakfast: "8 am to 11 am",
                 lunch: "11 am to 2 pm",
                 dinner: "5 pm to 8 pm",
@@ -62,7 +62,7 @@ describe("Firestore /meetups create rules", () => {
         await assertFails(addDoc(collection(db, "meetups"), meetupData));
     });
 
-    it("Meetups with non-string values for timeslots cannot be created (error value in non-zero index)", async () => {
+    it("Meetups with non-string values for availability cannot be created (error value in non-zero index)", async () => {
         // Create an anonymous authenticated user
         const anonUser = testEnv.authenticatedContext("anon");
         const db = anonUser.firestore();
@@ -71,12 +71,12 @@ describe("Firestore /meetups create rules", () => {
             name: "Meetup #1",
             createdAt: new Date(),
             participantNames: ["John", "Alice"],
-            timeslots: {
+            availability: {
                 "2024-12-31": ["breakfast"],
                 "2025-01-01": ["breakfast", "dinner", 2],
                 "2025-01-02": ["breakfast", "lunch"],
             },
-            timeslotDescription: {
+            timeslots: {
                 breakfast: "8 am to 11 am",
                 lunch: "11 am to 2 pm",
                 dinner: "5 pm to 8 pm",
@@ -95,12 +95,12 @@ describe("Firestore /meetups create rules", () => {
             name: "Meetup #1",
             createdAt: new Date(),
             participantNames: ["John", "Alice"],
-            timeslots: {
+            availability: {
                 "2024-12-31": ["breakfast", "lunch", "dinner"],
                 "2025-01-01": ["breakfast", "dinner"],
                 "2025-01-02": ["breakfast", "lunch"],
             },
-            timeslotDescription: {
+            timeslots: {
                 breakfast: "8 am to 11 am",
                 lunch: 1,
                 dinner: "5 pm to 8 pm",

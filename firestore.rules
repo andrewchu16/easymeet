@@ -28,21 +28,21 @@ service cloud.firestore {
       let hasCreatedAt = "createdAt" in meetupData && meetupData.createdAt is timestamp;
 
       // Check timeslots are Map<string, string[]>
-      let hasTimeslots = "timeslots" in meetupData && meetupData.timeslots is map;
+      let hasAvailability = "availability" in meetupData && meetupData.availability is map;
 
       // todo: properly check the entire lists are homogeneous
-      let tslotsVals = meetupData.timeslots.values();
-      let hasValidTimeslots = hasTimeslots && tslotsVals.size() == 0 || (tslotsVals[0] is list && (tslotsVals[0].size() == 0 || tslotsVals[0][0] is string));
+      let availVals = meetupData.availability.values();
+      let hasValidAvailability = hasAvailability && availVals.size() == 0 || (availVals[0] is list && (availVals[0].size() == 0 || availVals[0][0] is string));
 
-      let hasTimeslotDescription = "timeslotDescription" in meetupData && meetupData.timeslotDescription is map;
-      let descVals = meetupData.timeslotDescription.values();
-      let hasValidTimeslotDescription = hasTimeslotDescription && descVals.size() == 0 || descVals[0] is string;
+      let hasTimeslots = "timeslots" in meetupData && meetupData.timeslots is map;
+      let descVals = meetupData.timeslots.values();
+      let hasValidTimeslots = hasTimeslots && descVals.size() == 0 || descVals[0] is string;
 
       // Check participantNames is string[]
       let hasParticipantNames = "participantNames" in meetupData && meetupData.participantNames is list;
       let hasValidParticipantNames = hasParticipantNames && meetupData.participantNames.size() == 0 || meetupData.participantNames[0] is string;
 
-      return hasName && hasCreatedAt && hasValidTimeslots && hasValidTimeslotDescription && hasValidParticipantNames;
+      return hasName && hasCreatedAt && hasValidAvailability && hasValidTimeslots && hasValidParticipantNames;
     }
 
     // Check if the data matches the participant schema
@@ -71,7 +71,7 @@ service cloud.firestore {
       // Allow creation of meetups if
       // - the user is signed in
       // - the user is creating a valid meetup
-      allow create: if isSignedIn() && onlyCreates(["createdAt", "name", "participantNames", "timeslotDescription", "timeslots"]) && isValidMeetup(request.resource.data);
+      allow create: if isSignedIn() && onlyCreates(["createdAt", "name", "participantNames", "availability", "timeslots"]) && isValidMeetup(request.resource.data);
     }
 
     match /meetups/{meetupId}/participants/{participantId} {

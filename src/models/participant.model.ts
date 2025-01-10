@@ -5,8 +5,8 @@ export default interface Participant {
 }
 
 /*
+Firebase Firestore structure:
 {
-    "participantId": "123",
     "name": "John",
     "createdAt": "2021-08-01T00:00:00Z",
     "availability": {
