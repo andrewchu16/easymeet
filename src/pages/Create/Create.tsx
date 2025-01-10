@@ -142,15 +142,11 @@ const Create = () => {
                             availability={availability}
                             onAvailabilityChange={handleAvailabilityChange}
                         />
-                    </section>
-                )}
-                {dates.length > 0 &&
-                    timeslots.length > 0 &&
-                    availability.length > 0 && (
-                        <button className="w-full py-3 bg-primary text-white rounded-[10px]">
+                        <button className="w-full py-3 my-8 mb-6 bg-primary text-white rounded-[10px]">
                             Let's meet!
                         </button>
-                    )}
+                    </section>
+                )}
             </div>
         </div>
     );
