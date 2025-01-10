@@ -125,7 +125,7 @@ const Create = () => {
     };
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col items-center gap-2">
             <div className="flex justify-center mb-4">
                 <MeetupTitle
                     editable
@@ -133,7 +133,7 @@ const Create = () => {
                     title={meetupTitle}
                 />
             </div>
-            <div className="px-4 w-full flex flex-col gap-5">
+            <div className="px-4 w-full flex flex-col gap-5 max-w-[500px]">
                 <section className="w-full flex flex-col items-center gap-3">
                     <h2 className="text-lg text-body font-medium">
                         Select dates for{" "}
