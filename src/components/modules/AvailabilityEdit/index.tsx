@@ -1,13 +1,5 @@
-interface TimeslotInfo {
-    name: string;
-    enabled: boolean;
-}
+import { Availability } from "../../../models/availability.model";
 
-interface Availability {
-    date: Date;
-    timeslots: TimeslotInfo[];
-    enabled: boolean;
-}
 interface TimeslotEditProps {
     availability: Availability[];
     onAvailabilityChange: (timeslots: Availability[]) => void;
@@ -23,4 +15,3 @@ const AvailabilityEdit = ({ availability, onAvailabilityChange }: TimeslotEditPr
 };
 
 export default AvailabilityEdit;
-export type { Availability };

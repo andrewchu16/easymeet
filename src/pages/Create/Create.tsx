@@ -1,13 +1,11 @@
 import { useState } from "react";
 import MeetupTitle from "../../components/modules/MeetupTitle";
 import Calendar from "../../components/modules/Calendar";
-import TimeslotsEdit, {
-    defaultTimeslots,
-    Timeslot,
-} from "../../components/modules/TimeslotsEdit";
-import AvailabilityEdit, {
-    Availability,
-} from "../../components/modules/AvailabilityEdit";
+import TimeslotsEdit from "../../components/modules/TimeslotsEdit";
+import { Timeslot } from "../../models/timeslot.model";
+import { defaultTimeslots } from "../../data/timeslots";
+import AvailabilityEdit from "../../components/modules/AvailabilityEdit";
+import { Availability, TimeslotInfo } from "../../models/availability.model";
 
 const Create = () => {
     const [meetupTitle, setMeetupTitle] = useState("New Meetup");
@@ -46,7 +44,7 @@ const Create = () => {
         const newAvailability: Availability[] = availability.map(
             (availValue) => {
                 // Remove deleted timeslots from all availabity dates
-                let newTimeslotsInfo = availValue.timeslots.filter(
+                const newTimeslotsInfo: TimeslotInfo[] = availValue.timeslots.filter(
                     (t) =>
                         !newTimeslots.some(
                             (newTimeslot) => newTimeslot.name === t.name
@@ -113,7 +111,9 @@ const Create = () => {
             </div>
             {dates.length > 0 && timeslots.length > 0 && (
                 <section className="py-7 px-4  bg-lightgray w-full rounded-t-[40px]">
-                    <h2 className="text-lg text-body text-center">Timeslots Available</h2>
+                    <h2 className="text-lg text-body text-center">
+                        Timeslots Available
+                    </h2>
                     <AvailabilityEdit
                         availability={availability}
                         onAvailabilityChange={handleAvailabilityChange}
