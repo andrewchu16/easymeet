@@ -2,6 +2,7 @@ import { useState } from "react";
 import MeetupTitle from "../../components/modules/MeetupTitle";
 import Calendar from "../../components/modules/Calendar";
 import TimeslotsEdit, {
+    defaultTimeslots,
     Timeslot,
 } from "../../components/modules/TimeslotsEdit";
 import AvailabilityEdit, {
@@ -11,7 +12,7 @@ import AvailabilityEdit, {
 const Create = () => {
     const [meetupTitle, setMeetupTitle] = useState("New Meetup");
     const [dates, setDates] = useState<Date[]>([]);
-    const [timeslots, setTimeslots] = useState<Timeslot[]>([]);
+    const [timeslots, setTimeslots] = useState<Timeslot[]>(defaultTimeslots);
     const [availability, setAvailability] = useState<Availability[]>([]);
 
     const handleTitleChange = (event: React.FormEvent<HTMLDivElement>) => {
@@ -112,7 +113,7 @@ const Create = () => {
             </div>
             {dates.length > 0 && timeslots.length > 0 && (
                 <section className="py-7 px-4  bg-lightgray w-full rounded-t-[40px]">
-                    <h2 className="text-lg text-body">Timeslots Available</h2>
+                    <h2 className="text-lg text-body text-center">Timeslots Available</h2>
                     <AvailabilityEdit
                         availability={availability}
                         onAvailabilityChange={handleAvailabilityChange}
