@@ -107,9 +107,6 @@ const Create = () => {
             }
         );
 
-        console.log("new", newAvailability);
-        console.log(timeslots, newTimeslots);
-
         setTimeslots(newTimeslots);
         setAvailability(newAvailability);
     };
