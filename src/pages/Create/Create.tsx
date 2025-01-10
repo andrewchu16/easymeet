@@ -9,12 +9,20 @@ import {
     TimeslotsEdit,
     AvailabilityEdit,
 } from "../../components/modules";
+import {
+    createMeetup,
+    createNewMeetupData,
+} from "../../firebase/firebaseManager";
+import { app } from "../../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
     const [meetupTitle, setMeetupTitle] = useState("New Meetup");
     const [dates, setDates] = useState<Date[]>([]);
     const [timeslots, setTimeslots] = useState<Timeslot[]>(defaultTimeslots);
     const [availability, setAvailability] = useState<Availability[]>([]);
+
+    const navigate = useNavigate();
 
     const handleTitleChange = (event: React.FormEvent<HTMLDivElement>) => {
         setMeetupTitle(event.currentTarget.textContent || "");
@@ -65,9 +73,6 @@ const Create = () => {
         });
 
         newAvailability.sort((a, b) => a.date.getTime() - b.date.getTime());
-
-        console.log(newDates.map((d) => d.getTime()));
-        console.log(newAvailability);
 
         setDates(newDates);
         setAvailability(newAvailability);
@@ -124,6 +129,20 @@ const Create = () => {
         setAvailability(newAvailability);
     };
 
+    const handleCreateMeetup = async () => {
+        const meetupData = createNewMeetupData(
+            meetupTitle,
+            availability,
+            timeslots
+        );
+
+        console.log(meetupData);
+        
+        await createMeetup(app, meetupData);
+
+        navigate(`/share/${meetupData.id}?new=true`);
+    };
+
     return (
         <div className="flex flex-col items-center gap-2">
             <div className="flex justify-center mb-4">
@@ -162,7 +181,7 @@ const Create = () => {
                             availability={availability}
                             onAvailabilityChange={handleAvailabilityChange}
                         />
-                        <button className="w-full py-3 my-8 mb-6 bg-primary text-white rounded-[10px]">
+                        <button className="w-full py-3 my-8 mb-6 bg-primary text-white rounded-[10px] active:bg-secondary active:text-body transition-all" onClick={handleCreateMeetup}>
                             Let's meet!
                         </button>
                     </section>

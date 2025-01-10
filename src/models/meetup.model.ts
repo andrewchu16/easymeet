@@ -2,6 +2,7 @@ import { Availability } from "./availability.model";
 import { Timeslot } from "./timeslot.model";
 
 export default interface Meetup {
+    id: string;
     name: string;
     createdAt: Date;
     availability: Availability[];
