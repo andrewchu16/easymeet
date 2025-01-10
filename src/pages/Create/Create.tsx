@@ -3,7 +3,12 @@ import { Timeslot } from "../../models/timeslot.model";
 import { Availability, TimeslotInfo } from "../../models/availability.model";
 import { defaultTimeslots } from "../../data/timeslots";
 import { getRandomId } from "../../util/getRandomId";
-import { MeetupTitle, Calendar, TimeslotsEdit, AvailabilityEdit } from "../../components/modules";
+import {
+    MeetupTitle,
+    Calendar,
+    TimeslotsEdit,
+    AvailabilityEdit,
+} from "../../components/modules";
 
 const Create = () => {
     const [meetupTitle, setMeetupTitle] = useState("New Meetup");
@@ -46,7 +51,7 @@ const Create = () => {
                     timeslots: timeslots.map((t) => ({
                         name: t.name,
                         enabled: false,
-                        id: getRandomId(),
+                        id: t.id,
                     })),
                     id: getRandomId(),
                 });
@@ -63,25 +68,34 @@ const Create = () => {
         const newAvailability: Availability[] = availability.map(
             (availValue) => {
                 // Remove deleted timeslots from all availabity dates
-                const newTimeslotsInfo: TimeslotInfo[] =
-                    availValue.timeslots.filter(
-                        (t) =>
-                            !newTimeslots.some(
-                                (newTimeslot) => newTimeslot.name === t.name
-                            )
+                let newTimeslotsInfo: TimeslotInfo[] =
+                    availValue.timeslots.filter((t) =>
+                        newTimeslots.some(
+                            (newTimeslot) => newTimeslot.id === t.id
+                        )
                     );
 
-                // Add new timeslots to all availability dates
+                // Add new timeslots to all availability dates and edit existing ones
                 newTimeslots.forEach((newTimeslot) => {
-                    if (
-                        !newTimeslotsInfo.some(
-                            (t) => t.name === newTimeslot.name
-                        )
-                    ) {
+                    let isNew = true;
+
+                    newTimeslotsInfo = newTimeslotsInfo.map((t) => {
+                        if (t.id === newTimeslot.id) {
+                            isNew = false;
+                            return {
+                                ...t,
+                                name: newTimeslot.name,
+                            };
+                        }
+
+                        return t;
+                    });
+
+                    if (isNew) {
                         newTimeslotsInfo.push({
                             name: newTimeslot.name,
                             enabled: false,
-                            id: getRandomId(),
+                            id: newTimeslot.id,
                         });
                     }
                 });
@@ -92,6 +106,9 @@ const Create = () => {
                 };
             }
         );
+
+        console.log("new", newAvailability);
+        console.log(timeslots, newTimeslots);
 
         setTimeslots(newTimeslots);
         setAvailability(newAvailability);
