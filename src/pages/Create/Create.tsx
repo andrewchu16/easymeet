@@ -101,7 +101,7 @@ const Create = () => {
                 {dates.length > 0 && (
                     <section className="w-full flex flex-col items-center gap-3">
                         <h2 className="text-lg text-body font-medium">
-                            Set available timeslots for{" "}
+                            Choose timeslots for{" "}
                             <span className="font-semibold">{meetupTitle}</span>
                         </h2>
                         <TimeslotsEdit
