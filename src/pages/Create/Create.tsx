@@ -44,12 +44,13 @@ const Create = () => {
         const newAvailability: Availability[] = availability.map(
             (availValue) => {
                 // Remove deleted timeslots from all availabity dates
-                const newTimeslotsInfo: TimeslotInfo[] = availValue.timeslots.filter(
-                    (t) =>
-                        !newTimeslots.some(
-                            (newTimeslot) => newTimeslot.name === t.name
-                        )
-                );
+                const newTimeslotsInfo: TimeslotInfo[] =
+                    availValue.timeslots.filter(
+                        (t) =>
+                            !newTimeslots.some(
+                                (newTimeslot) => newTimeslot.name === t.name
+                            )
+                    );
 
                 // Add new timeslots to all availability dates
                 newTimeslots.forEach((newTimeslot) => {
@@ -100,7 +101,8 @@ const Create = () => {
                 {dates.length > 0 && (
                     <section className="w-full flex flex-col items-center gap-3">
                         <h2 className="text-lg text-body font-medium">
-                            Select available timeslots
+                            Set available timeslots for{" "}
+                            <span className="font-semibold">{meetupTitle}</span>
                         </h2>
                         <TimeslotsEdit
                             timeslots={timeslots}
@@ -108,25 +110,25 @@ const Create = () => {
                         />
                     </section>
                 )}
-            </div>
-            {dates.length > 0 && timeslots.length > 0 && (
-                <section className="py-7 px-4  bg-lightgray w-full rounded-t-[40px]">
-                    <h2 className="text-lg text-body text-center">
-                        Timeslots Available
-                    </h2>
-                    <AvailabilityEdit
-                        availability={availability}
-                        onAvailabilityChange={handleAvailabilityChange}
-                    />
-                </section>
-            )}
-            {dates.length > 0 &&
-                timeslots.length > 0 &&
-                availability.length > 0 && (
-                    <button className="w-full py-3 bg-primary text-white rounded-[10px]">
-                        Let's meet!
-                    </button>
+                {dates.length > 0 && timeslots.length > 0 && (
+                    <section className="py-7 px-4  bg-lightgray w-full rounded-t-[40px]">
+                        <h2 className="text-lg text-body text-center">
+                            Timeslots Available
+                        </h2>
+                        <AvailabilityEdit
+                            availability={availability}
+                            onAvailabilityChange={handleAvailabilityChange}
+                        />
+                    </section>
                 )}
+                {dates.length > 0 &&
+                    timeslots.length > 0 &&
+                    availability.length > 0 && (
+                        <button className="w-full py-3 bg-primary text-white rounded-[10px]">
+                            Let's meet!
+                        </button>
+                    )}
+            </div>
         </div>
     );
 };
