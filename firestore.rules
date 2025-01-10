@@ -69,9 +69,9 @@ service cloud.firestore {
       allow get: if true;
 
       // Allow creation of meetups if
-      // - the user is signed in
+      // - the user is creating a new meetup
       // - the user is creating a valid meetup
-      allow create: if isSignedIn() && onlyCreates(["createdAt", "name", "participantNames", "availability", "timeslots"]) && isValidMeetup(request.resource.data);
+      allow write: if !exists(/databases/$(database)/documents/users/$(request.resource.id)) && onlyCreates(["createdAt", "name", "participantNames", "availability", "timeslots"]) && isValidMeetup(request.resource.data);
     }
 
     match /meetups/{meetupId}/participants/{participantId} {

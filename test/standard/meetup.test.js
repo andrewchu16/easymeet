@@ -66,7 +66,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertSucceeds(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertSucceeds(setDoc(docRef, meetupData));
     });
 
     it("Meetups without a meetup name cannot be created", async () => {
@@ -88,8 +90,10 @@ describe("Firestore /meetups create rules", () => {
                 dinner: "5 pm to 8 pm",
             },
         };
+        
+        const docRef = doc(db, "meetups", "meetup1");
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups without a createdAt date cannot be created", async () => {
@@ -112,7 +116,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups without participant names cannot be created", async () => {
@@ -135,7 +141,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups without valid participant names cannot be created", async () => {
@@ -159,7 +167,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups without availability cannot be created", async () => {
@@ -178,7 +188,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups with non-list availability cannot be created", async () => {
@@ -202,7 +214,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups with non-string values for availability cannot be created", async () => {
@@ -226,7 +240,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups without timeslot descriptions cannot be created", async () => {
@@ -245,7 +261,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups with non-string timeslot descriptions cannot be created", async () => {
@@ -269,7 +287,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups with extra fields cannot be created", async () => {
@@ -294,7 +314,9 @@ describe("Firestore /meetups create rules", () => {
             foo: "bar",
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 });
 

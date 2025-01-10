@@ -59,7 +59,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups with non-string values for availability cannot be created (error value in non-zero index)", async () => {
@@ -83,7 +85,9 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 
     it("Meetups with non-string timeslot descriptions cannot be created (error value in non-zero index)", async () => {
@@ -107,6 +111,8 @@ describe("Firestore /meetups create rules", () => {
             },
         };
 
-        await assertFails(addDoc(collection(db, "meetups"), meetupData));
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
     });
 });
