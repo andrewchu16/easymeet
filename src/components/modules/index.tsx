@@ -6,6 +6,8 @@ import Contact from "./Contact/Contact";
 import ShareButton from "./ShareButton/ShareButton";
 import NameInput from "./NameInput/NameInput";
 import NameModal from "./NameModal/NameModal";
+import TimeslotsView from "./TimeslotsView/TimeslotsView";
+import AvailabilityView from "./AvailabilityView/AvailabilityView";
 
 export {
     AvailabilityEdit,
@@ -16,4 +18,6 @@ export {
     ShareButton,
     NameInput,
     NameModal,
+    TimeslotsView,
+    AvailabilityView,
 };

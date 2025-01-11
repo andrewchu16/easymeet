@@ -6,7 +6,12 @@ import "@material-symbols/font-500";
 import { useEffect, useState } from "react";
 import Meetup from "../../models/meetup.model";
 import { Helmet } from "react-helmet";
-import { MeetupTitle, NameModal } from "../../components/modules";
+import {
+    AvailabilityView,
+    MeetupTitle,
+    NameModal,
+    TimeslotsView,
+} from "../../components/modules";
 import Participant from "../../models/participant.model";
 
 const Join = () => {
@@ -61,15 +66,17 @@ const Join = () => {
                 </section>
 
                 <section className="py-7 px-4 flex flex-col gap-2 bg-lightgray w-full rounded-t-[40px]">
-                    <section>
+                    <section className="flex items-center flex-col gap-1">
                         <h2 className="text-lg text-body text-center">
                             Timeslot Descriptions
                         </h2>
-                    </section>{" "}
-                    <section>
+                        <TimeslotsView timeslots={meetup.timeslots} />
+                    </section>
+                    <section className="flex items-center  flex-col gap-1">
                         <h2 className="text-lg text-body text-center">
                             Timeslots Available
                         </h2>
+                        <AvailabilityView />
                     </section>
                 </section>
             </main>
