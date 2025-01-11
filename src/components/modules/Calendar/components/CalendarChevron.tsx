@@ -29,6 +29,7 @@ const CalendarChevron = (props: ChevronProps) => {
             color = "var(--color-dark)";
             break;
         default:
+            size = 24;
             icon = "question_mark";
             color = "var(--color-dark)";
             break;
