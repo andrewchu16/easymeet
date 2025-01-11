@@ -1,7 +1,7 @@
 export default interface Participant {
     name: string;
     createdAt: Date;
-    availability: Map<string, string[]>;
+    availability: Record<string, string[]>;
 }
 
 /*
