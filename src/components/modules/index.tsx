@@ -5,6 +5,7 @@ import TimeslotsEdit from "./TimeslotsEdit/TimeslotsEdit";
 import Contact from "./Contact/Contact";
 import ShareButton from "./ShareButton/ShareButton";
 import NameInput from "./NameInput/NameInput";
+import NameModal from "./NameModal/NameModal";
 
 export {
     AvailabilityEdit,
@@ -14,4 +15,5 @@ export {
     Contact,
     ShareButton,
     NameInput,
+    NameModal,
 };
