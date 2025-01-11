@@ -61,10 +61,10 @@ const Share = () => {
                 )}
                 <span className="text-3xl">🥳🎊</span>
                 <h1 className="text-dark text-center font-bold text-2xl">
-                    {meetup.name} Created!
+                    "{meetup.name}" Created!
                 </h1>
                 <p className="text-body text-center">
-                    Share this link with your friends to get started!
+                    Share this link with your friends to get started.
                 </p>
                 <span className="text-body flex items-center gap-3 bg-light shadow-md px-4 py-3 rounded-lg">
                     <a
@@ -72,7 +72,7 @@ const Share = () => {
                         className="underline hover:font-semibold active:font-semibold"
                         id="share-link"
                     >
-                        easymeet.ca/join/{meetId}
+                        https://easymeet.ca/join/{meetId}
                     </a>
                     <span
                         onClick={() => {
