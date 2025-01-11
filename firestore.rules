@@ -2,11 +2,6 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Check if the current user is authenticated
-    function isSignedIn() {
-      return request.auth != null;
-    }
-
     // Check if the current user is the participant
     function userIsParticipant(name, participantData) {
       return name == participantData.name;
@@ -79,21 +74,17 @@ service cloud.firestore {
       allow read: if true;
 
       // Allow updating availability if
-      // - the user is the participant
       // - the request only changes the availability field
       // - the resulting availability is valid
-      allow update: if userIsParticipant(request.auth.token.sub, resource.data) 
-      && onlyChanges(["availability"]) 
+      allow update: if onlyChanges(["availability"]) 
       && isValidParticipant(request.resource.data);
 
       // Allow creating participant if 
-      // - the user is creating a participant for themselves
       // - the user is creating a valid participant
       // - the user doesn't already exist in the participants list
-      allow create: if userIsParticipant(request.auth.token.sub, request.resource.data) 
-      && onlyCreates(["availability", "createdAt", "name"]) 
+      allow create: if onlyCreates(["availability", "createdAt", "name"]) 
       && isValidParticipant(request.resource.data) 
-      && !(request.auth.token.sub in getParticipantNames(meetupId));
+      && !(request.resource.data.name in getParticipantNames(meetupId));
     }
   }
 }
