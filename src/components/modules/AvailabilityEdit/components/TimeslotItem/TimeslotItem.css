@@ -3,5 +3,5 @@
 }
 
 .timeslot-item.active {
-    @apply text-dark border-solid border-body/50 shadow-sm  font-medium ;
+    @apply text-dark border-solid border-body/50 shadow-sm  font-medium;
 }

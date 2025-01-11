@@ -120,15 +120,21 @@ const createMeetup = async (app: FirebaseApp, meetup: Meetup) => {
     await setDoc(docRef, meetupData);
 };
 
+interface ParticipantData {
+    participantId: string;
+    participant: Participant;
+    isNew: boolean;
+}
+
 const createParticipant = async (
     app: FirebaseApp,
     meetup: Meetup,
-    participant: Participant
-): Promise<string> => {
+    participantName: string
+): Promise<ParticipantData> => {
     const db = getFirestore(app);
 
     // Check if participant already exists
-    if (meetup.participantNames.includes(participant.name)) {
+    if (meetup.participantNames.includes(participantName)) {
         // Get participant data with the same name
         const participantsRef = collection(
             db,
@@ -137,42 +143,60 @@ const createParticipant = async (
             "participants"
         );
 
-        const q = query(participantsRef, where("name", "==", participant.name));
+        const q = query(participantsRef, where("name", "==", participantName));
 
         const querySnapshot = await getDocs(q);
         if (!querySnapshot.empty) {
+            let pData: ParticipantData | null = null;
             querySnapshot.forEach((doc) => {
                 const participantId = doc.id;
-                updateParticipant(app, participantId, participant);
 
-                return participantId;
+                pData = {
+                    participantId,
+                    participant: doc.data() as Participant,
+                    isNew: false,
+                };
             });
+
+            return pData!;
         }
     }
+
+    // Add participant data
+    const participantData: Participant = {
+        name: participantName,
+        availability: {},
+        createdAt: new Date(),
+    };
+
+    const docRef = addDoc(
+        collection(db, "meetups", meetup.id, "participants"),
+        participantData
+    );
 
     // Add participant's name to meetup name list
     const meetupRef = doc(db, "meetups", meetup.id);
     await updateDoc(meetupRef, {
-        participantNames: [...meetup.participantNames, participant.name],
+        participantNames: [...meetup.participantNames, participantName],
     });
 
-    // Add participant data
-    const docRef = addDoc(
-        collection(db, "meetups", meetup.id, "participants"),
-        participant
-    );
     const docSnap = await docRef;
 
-    return docSnap.id;
+    return {
+        participantId: docSnap.id,
+        participant: participantData,
+        isNew: true,
+    };
 };
 
 const updateParticipant = async (
     app: FirebaseApp,
     participantId: string,
-    participantData: Participant
+    participantData: Participant,
+    meetupId: string
 ) => {
     const db = getFirestore(app);
-    const docRef = doc(db, "participants", participantId);
+    const docRef = doc(db, "meetups", meetupId, "participants", participantId);
     await updateDoc(docRef, { availability: participantData.availability });
 };
 

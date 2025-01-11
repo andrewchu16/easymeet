@@ -1,0 +1,7 @@
+.timeslot-item {
+    @apply border-dashed border-body/30 border-[2px] transition-all duration-[50ms] font-normal;
+}
+
+.timeslot-item.active {
+    @apply border-solid border-body/50 shadow-sm  font-medium;
+}
