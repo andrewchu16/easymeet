@@ -167,7 +167,9 @@ const Create = () => {
                     <section className="w-full flex flex-col items-center gap-3">
                         <h2 className="text-lg text-body font-medium">
                             Select dates for{" "}
-                            <span className="font-semibold">{meetupTitle}</span>
+                            <span className="font-semibold">
+                                "{meetupTitle}"
+                            </span>
                         </h2>
                         <Calendar
                             dates={dates}
@@ -179,7 +181,7 @@ const Create = () => {
                             <h2 className="text-lg text-body font-medium">
                                 Choose timeslots for{" "}
                                 <span className="font-semibold">
-                                    {meetupTitle}
+                                    "{meetupTitle}"
                                 </span>
                             </h2>
                             <TimeslotsEdit
