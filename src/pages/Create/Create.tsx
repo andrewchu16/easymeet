@@ -144,7 +144,7 @@ const Create = () => {
 
     const DESCRIPTION =
         "Create a new meetup to share with your friends with EasyMeet, a mobile-friendly scheduling app.";
-    const TITLE = "Create Meetup - EasyMeet";
+    const TITLE = "Create a Meetup - EasyMeet";
 
     return (
         <>
