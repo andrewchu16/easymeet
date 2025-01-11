@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import MeetNotFound from "../MeetNotFound/MeetNotFound";
 
 const checkMeetId = (meetId: string) => {
@@ -7,9 +7,14 @@ const checkMeetId = (meetId: string) => {
 
 const Share = () => {
     const { meetId } = useParams();
+    const [searchParams] = useSearchParams();
+
+    const isNew = searchParams.get("new") === "true";
+    console.log(isNew);
+
 
     if (!meetId || !checkMeetId(meetId)) {
-        return <MeetNotFound />;
+        return <MeetNotFound id={meetId} />;
     }
 
     return <div>Share meet {meetId}</div>;
