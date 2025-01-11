@@ -1,6 +1,6 @@
 const getRandomId = (length = 5) => {
     const dateString = Date.now().toString(36);
-    const randomness = Math.random().toString(36).substring(2);
+    const randomness = crypto.randomUUID().replace(/-/g, "");
 
     // interleave date and randomness character by character
     let result = "";
