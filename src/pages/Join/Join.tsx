@@ -6,12 +6,18 @@ import "@material-symbols/font-500";
 import { useEffect, useState } from "react";
 import Meetup from "../../models/meetup.model";
 import { Helmet } from "react-helmet";
+import { MeetupTitle } from "../../components/modules";
+import Participant from "../../models/participant.model";
 
 const Join = () => {
     const { meetId } = useParams();
     const [meetup, setMeetup] = useState<Meetup | null>(null);
     const [loading, setLoading] = useState(true);
-    const [justCopied, setJustCopied] = useState(false);
+    const [participant, setParticipant] = useState<Participant>({
+        name: "",
+        createdAt: new Date(0),
+        availability: {} as Record<string, string[]>,
+    });
 
     useEffect(() => {
         if (meetId) {
@@ -26,13 +32,6 @@ const Join = () => {
         return <>({!loading && <MeetNotFound id={meetId} />})</>;
     }
 
-    const copyShareLink = () => {
-        const shareLink = document.getElementById("share-link");
-        if (shareLink) {
-            navigator.clipboard.writeText(shareLink.textContent || "");
-        }
-    };
-
     const TITLE = `Join ${meetup.name} - EasyMeet`;
     const DESCRIPTION = `Join ${meetup.name} on EasyMeet!`;
 
@@ -44,8 +43,32 @@ const Join = () => {
                 <meta property="og:description" content={DESCRIPTION} />
                 <meta property="description" content={DESCRIPTION} />
                 <meta property="og:url" content="https://easymeet.ca" />
+                <meta name="robots" content="noindex" />
             </Helmet>
-            <div>Join meet {meetup.name}</div>;
+            <main className="flex flex-col items-center gap-2">
+                <section className="flex justify-center items-center my-4">
+                    <MeetupTitle
+                        editable={false}
+                        handleChange={() => null}
+                        title={meetup.name}
+                    />
+                </section>
+                <section>
+
+                </section>
+                <section className="py-7 px-4 flex flex-col gap-2 bg-lightgray w-full rounded-t-[40px]">
+                    <section>
+                        <h2 className="text-lg text-body text-center">
+                            Timeslot Descriptions
+                        </h2>
+                    </section>{" "}
+                    <section>
+                        <h2 className="text-lg text-body text-center">
+                            Timeslots Available
+                        </h2>
+                    </section>
+                </section>
+            </main>
         </>
     );
 };
