@@ -10,7 +10,7 @@ const Error404 = () => {
                 <meta property="og:title" content={TITLE} />
                 <meta property="og:url" content="https://easymeet.ca" />
             </Helmet>
-            <div className="flex flex-col items-center justify-center h-screen w-screen absolute top-0 left-0 p-10 gap-2">
+            <div className="flex flex-col items-center justify-center h-screen w-screen absolute -z-10 top-0 left-0 p-10 gap-2">
                 <h1 className="text-dark text-center font-bold text-2xl">
                     Sorry!
                 </h1>

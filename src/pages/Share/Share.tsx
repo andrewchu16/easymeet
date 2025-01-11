@@ -50,7 +50,7 @@ const Share = () => {
                 <meta property="description" content={DESCRIPTION} />
                 <meta property="og:url" content="https://easymeet.ca" />
             </Helmet>
-            <div className="flex flex-col items-center justify-center h-screen w-screen absolute top-0 left-0 p-10 gap-2">
+            <div className="flex flex-col items-center justify-center h-screen w-screen absolute top-0 left-0 p-10 -z-10 gap-2">
                 {isNew && (
                     <ConfettiExplosion
                         duration={2300}
