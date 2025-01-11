@@ -39,7 +39,7 @@ const CalendarChevron = (props: ChevronProps) => {
         <span style={{
             fontSize: size,
             color: color,
-        }} className="material-symbols-rounded">{icon}</span>
+        }} className="material-symbols-rounded select-none">{icon}</span>
     );
 };
 

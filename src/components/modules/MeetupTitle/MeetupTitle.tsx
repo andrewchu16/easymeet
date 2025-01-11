@@ -48,7 +48,7 @@ const MeetupTitle = ({
             </h1>
             {editable && (
                 <span
-                    className="material-symbols-rounded meetup-title-icon text-dark"
+                    className="material-symbols-rounded meetup-title-icon text-dark select-none"
                     style={{
                         fontSize: 24,
                     }}

@@ -18,7 +18,7 @@ const TimeslotItem = ({ info, onEnableChange }: TimeslotItem) => {
         >
             <label className="text-lg flex gap-3 items-center">
                 <span
-                    className="material-symbols-rounded"
+                    className="material-symbols-rounded select-none"
                     style={{ fontSize: 22 }}
                 >
                     {info.enabled ? "check_box" : "check_box_outline_blank"}

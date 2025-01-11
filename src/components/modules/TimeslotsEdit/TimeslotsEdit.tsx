@@ -73,7 +73,7 @@ const TimeslotsEdit = ({
                                 handleDeleteTimeslot(index);
                             }}
                         >
-                            <span className="material-symbols-rounded text-dark" style={{
+                            <span className="material-symbols-rounded text-dark select-none" style={{
                                 fontSize: 22,
                             }}>delete</span>
                         </button>
@@ -83,7 +83,7 @@ const TimeslotsEdit = ({
                     className="rounded-full text-dark active:font-semibold hover:brightness-110 active:brightness-110 transition-all flex items-center justify-center h-12"
                     onClick={addTimeslot}
                 >
-                    <span className="material-symbols-rounded" style={{ fontSize: 22}}>add</span> Add timeslot
+                    <span className="material-symbols-rounded select-none" style={{ fontSize: 22}}>add</span> Add timeslot
                 </button>
             </ul>
         </>
