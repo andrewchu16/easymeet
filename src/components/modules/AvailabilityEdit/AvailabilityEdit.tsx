@@ -31,7 +31,7 @@ const AvailabilityEdit = ({
 
     return (
         <>
-            <div className="text-dark flex gap-2 justify-center mb-0.5">
+            <div className="text-dark flex gap-2 justify-center mt-1 mb-3">
                 <button
                     className="font-semibold active:font-bold shadow-md bg-light active:brightness-95 transition-all duration-75 text-body px-2 py-1 rounded-lg"
                     onClick={() => setEnableAll(true)}
