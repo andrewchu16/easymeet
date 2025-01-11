@@ -4,6 +4,7 @@ import { getMeetup } from "../../firebase/firebaseManager";
 import { app } from "../../firebase/firebase";
 import ConfettiExplosion from "react-confetti-explosion";
 import "@material-symbols/font-500";
+import "@material-symbols/font-700";
 import { useEffect, useState } from "react";
 import Meetup from "../../models/meetup.model";
 import { Helmet } from "react-helmet";
@@ -83,7 +84,7 @@ const Share = () => {
                                 }, 1000);
                             }
                         }}
-                        className={`select-none ${
+                        className={`select-none hover:font-bold ${
                             justCopied
                                 ? "font-semibold"
                                 : "material-symbols-rounded"
@@ -93,6 +94,15 @@ const Share = () => {
                     </span>
                 </span>
             </div>
+            {/* pre-render bold icon */}
+            <span
+                className="absoslute opacity-0 material-symbols-rounded"
+                style={{
+                    fontWeight: 700,
+                }}
+            >
+                content_copy
+            </span>
         </>
     );
 };
