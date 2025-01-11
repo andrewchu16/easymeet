@@ -1,4 +1,4 @@
-import { MaterialSymbol } from "react-material-symbols";
+import "@material-symbols/font-400";
 import { Timeslot } from "../../../models/timeslot.model";
 import { getRandomId } from "../../../util/getRandomId";
 
@@ -73,11 +73,9 @@ const TimeslotsEdit = ({
                                 handleDeleteTimeslot(index);
                             }}
                         >
-                            <MaterialSymbol
-                                icon="delete"
-                                className="text-dark"
-                                size={22}
-                            />
+                            <span className="material-symbols-rounded text-dark" style={{
+                                fontSize: 22,
+                            }}>delete</span>
                         </button>
                     </li>
                 ))}
@@ -85,7 +83,7 @@ const TimeslotsEdit = ({
                     className="rounded-full text-dark active:font-semibold hover:brightness-110 active:brightness-110 transition-all flex items-center justify-center h-12"
                     onClick={addTimeslot}
                 >
-                    <MaterialSymbol icon="add" size={22} /> Add timeslot
+                    <span style={{ fontSize: 22}}>add</span>
                 </button>
             </ul>
         </>

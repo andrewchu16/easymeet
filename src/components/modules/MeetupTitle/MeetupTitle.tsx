@@ -1,4 +1,4 @@
-import { MaterialSymbol } from "react-material-symbols";
+import "@material-symbols/font-700";
 import "./MeetupTitle.css";
 import { useRef } from "react";
 
@@ -47,13 +47,15 @@ const MeetupTitle = ({
                 {title}
             </h1>
             {editable && (
-                <MaterialSymbol
-                    icon="edit"
-                    size={24}
-                    color="404040"
-                    className="meetup-title-icon"
+                <span
+                    className="material-symbols-rounded meetup-title-icon text-dark"
+                    style={{
+                        fontSize: 24,
+                    }}
                     onClick={focusTitle}
-                />
+                >
+                    edit
+                </span>
             )}
         </div>
     );

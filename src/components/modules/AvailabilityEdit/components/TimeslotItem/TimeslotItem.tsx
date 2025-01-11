@@ -1,6 +1,6 @@
-import { MaterialSymbol } from "react-material-symbols";
 import { TimeslotInfo } from "../../../../../models/availability.model";
 import "./TimeslotItem.css";
+import "@material-symbols/font-500";
 
 interface TimeslotItem {
     info: TimeslotInfo;
@@ -17,11 +17,12 @@ const TimeslotItem = ({ info, onEnableChange }: TimeslotItem) => {
             onClick={() => onEnableChange(!info.enabled)}
         >
             <label className="text-lg flex gap-3 items-center">
-                {info.enabled ? (
-                    <MaterialSymbol icon="check_box" size={22} />
-                ) : (
-                    <MaterialSymbol icon="check_box_outline_blank" size={22} />
-                )}
+                <span
+                    className="material-symbols-rounded"
+                    style={{ fontSize: 22 }}
+                >
+                    {info.enabled ? "check_box" : "check_box_outline_blank"}
+                </span>
                 {info.name}
             </label>
         </li>

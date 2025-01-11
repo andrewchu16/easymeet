@@ -1,9 +1,9 @@
 import { ChevronProps } from "react-day-picker";
-import { MaterialSymbol, SymbolCodepoints } from "react-material-symbols";
+import '@material-symbols/font-400';
 import "react-day-picker/style.css";
 
 const CalendarChevron = (props: ChevronProps) => {
-    let icon: SymbolCodepoints;
+    let icon: string;
     let size: number;
     let color: string;
 
@@ -36,12 +36,10 @@ const CalendarChevron = (props: ChevronProps) => {
     }
 
     return (
-        <MaterialSymbol
-            icon={icon}
-            className="active:scale-110 transition-transform"
-            color={color}
-            size={size}
-        />
+        <span style={{
+            fontSize: size,
+            color: color,
+        }} className="material-symbols-rounded">{icon}</span>
     );
 };
 

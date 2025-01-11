@@ -14,11 +14,13 @@
   },
   "dependencies": {
     "@firebase/firestore": "^4.7.5",
+    "@material-symbols/font-400": "^0.27.2",
+    "@material-symbols/font-500": "^0.27.2",
+    "@material-symbols/font-700": "^0.27.2",
     "firebase": "^11.1.0",
     "react": "^18.3.1",
     "react-day-picker": "^9.5.0",
     "react-dom": "^18.3.1",
-    "react-material-symbols": "^4.4.0",
     "react-router-dom": "^7.1.1",
     "swiper": "^11.2.0"
   },
