@@ -11,7 +11,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Create />} />
                     <Route path="/join/:meetId" element={<Join />} />
-                    <Route path="/share/:metId" element={<Share />} />
+                    <Route path="/share/:meetId" element={<Share />} />
                     <Route path="*" element={<Error404 />} />
                 </Routes>
             </BrowserRouter>

@@ -1,23 +1,85 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import MeetNotFound from "../MeetNotFound/MeetNotFound";
-
-const checkMeetId = (meetId: string) => {
-    return typeof meetId === "string";
-};
+import { getMeetup } from "../../firebase/firebaseManager";
+import { app } from "../../firebase/firebase";
+import ConfettiExplosion from "react-confetti-explosion";
+import "@material-symbols/font-500";
+import { useEffect, useState } from "react";
+import Meetup from "../../models/meetup.model";
 
 const Share = () => {
     const { meetId } = useParams();
     const [searchParams] = useSearchParams();
+    const [meetup, setMeetup] = useState<Meetup | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [justCopied, setJustCopied] = useState(false);
 
     const isNew = searchParams.get("new") === "true";
-    console.log(isNew);
 
+    useEffect(() => {
+        if (meetId) {
+            getMeetup(app, meetId).then((meetup) => {
+                setMeetup(meetup);
+                setLoading(false);
+            });
+        }
+    }, [meetId]);
 
-    if (!meetId || !checkMeetId(meetId)) {
-        return <MeetNotFound id={meetId} />;
+    if (meetId === undefined || meetup === null) {
+        return <>({!loading && <MeetNotFound id={meetId} />})</>;
     }
 
-    return <div>Share meet {meetId}</div>;
+    const copyShareLink = () => {
+        const shareLink = document.getElementById("share-link");
+        if (shareLink) {
+            navigator.clipboard.writeText(shareLink.textContent || "");
+        }
+    };
+
+    return (
+        <div className="flex flex-col items-center justify-center h-screen w-screen absolute top-0 left-0 p-10 gap-2">
+            {isNew && (
+                <ConfettiExplosion
+                    duration={2300}
+                    force={0.6}
+                    particleCount={80}
+                    width={500}
+                />
+            )}
+            <span className="text-3xl">🥳🎊</span>
+            <h1 className="text-dark text-center font-bold text-2xl">
+                {meetup.name} Created!
+            </h1>
+            <p className="text-body text-center">
+                Share this link with your friends to get started!
+            </p>
+            <span className="text-body flex items-center gap-3 bg-light shadow-md px-4 py-3 rounded-lg">
+                <a
+                    href={`https://easymeet.ca/join/${meetId}`}
+                    className="underline hover:font-semibold active:font-semibold"
+                    id="share-link"
+                >
+                    easymeet.ca/join/{meetId}
+                </a>
+                <span
+                    onClick={() => {
+                        if (!justCopied) {
+                            copyShareLink();
+                            setJustCopied(true);
+                            setTimeout(() => {
+                                setJustCopied(false);
+                            }, 1000);
+                        }
+                    }}
+                    className={`select-none ${
+                        justCopied ? "font-semibold" : "material-symbols-rounded"
+                    }`}
+                >
+                    {justCopied ? "Copied!" : "content_copy"}
+                </span>
+            </span>
+        </div>
+    );
 };
 
 export default Share;
