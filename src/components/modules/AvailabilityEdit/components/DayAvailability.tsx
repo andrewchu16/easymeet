@@ -11,7 +11,7 @@ const DayAvailability = ({
     onAvailabilityChange,
 }: DayAvailabilityProps) => {
     const getReadableDate = (date: Date) => {
-        const options = { weekday: "long", month: "short", day: "numeric" };
+        const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "short", day: "numeric" };
         let formattedDate = new Intl.DateTimeFormat("en-US", options).format(
             date
         );
