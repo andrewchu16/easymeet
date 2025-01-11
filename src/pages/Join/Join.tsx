@@ -88,7 +88,7 @@ const Join = () => {
                     />
                 </section>
 
-                <section className="py-7 px-4 flex flex-col gap-2 bg-lightgray w-full rounded-t-[40px]">
+                <section className="py-7 px-4 flex flex-col gap-2 bg-lightgray w-full rounded-t-[40px] max-w-[500px]">
                     <section className="flex flex-col gap-1">
                         <h2 className="text-lg text-body text-center">
                             Timeslot Descriptions
