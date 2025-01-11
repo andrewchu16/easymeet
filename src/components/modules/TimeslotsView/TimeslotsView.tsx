@@ -7,12 +7,16 @@ interface TimeslotsViewProp {
 const TimeslotsView = ({ timeslots }: TimeslotsViewProp) => {
     return (
         <table className="table-fixed">
-            {timeslots.map((timeslot) => (
-                <tr key={timeslot.id}>
-                    <td className="font-semibold text-dark pr-6">{timeslot.name}</td>
-                    <td className="text-body">{timeslot.description}</td>
-                </tr>
-            ))}
+            <tbody>
+                {timeslots.map((timeslot) => (
+                    <tr key={timeslot.id}>
+                        <td className="font-semibold text-dark pr-6">
+                            {timeslot.name}
+                        </td>
+                        <td className="text-body">{timeslot.description}</td>
+                    </tr>
+                ))}
+            </tbody>
         </table>
     );
 };
