@@ -104,7 +104,7 @@ describe("Firestore /meetups/{meetupId}/participants read rules", () => {
 });
 
 describe("Firestore /meetups/{meetupId}/participants write rules", () => {
-    it("Authenticated users can create new participants", async () => {
+    it("Users can create new participants", async () => {
         const user = testEnv.authenticatedContext("Alice");
         const db = user.firestore();
 

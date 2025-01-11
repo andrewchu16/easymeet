@@ -79,22 +79,18 @@ service cloud.firestore {
       allow read: if true;
 
       // Allow updating availability if
-      // - the user is signed in
       // - the user is the participant
       // - the request only changes the availability field
       // - the resulting availability is valid
-      allow update: if isSignedIn()
-      && userIsParticipant(request.auth.token.sub, resource.data) 
+      allow update: if userIsParticipant(request.auth.token.sub, resource.data) 
       && onlyChanges(["availability"]) 
       && isValidParticipant(request.resource.data);
 
       // Allow creating participant if 
-      // - the user is signed in
       // - the user is creating a participant for themselves
       // - the user is creating a valid participant
       // - the user doesn't already exist in the participants list
-      allow create: if isSignedIn() 
-      && userIsParticipant(request.auth.token.sub, request.resource.data) 
+      allow create: if userIsParticipant(request.auth.token.sub, request.resource.data) 
       && onlyCreates(["availability", "createdAt", "name"]) 
       && isValidParticipant(request.resource.data) 
       && !(request.auth.token.sub in getParticipantNames(meetupId));

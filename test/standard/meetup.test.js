@@ -45,7 +45,7 @@ beforeEach(async () => {
 });
 
 describe("Firestore /meetups create rules", () => {
-    it("Only authenticated users can create meetups", async () => {
+    it("Users can create meetups", async () => {
         // Create an anonymous authenticated user
         const anonUser = testEnv.authenticatedContext("anon");
         const db = anonUser.firestore();
