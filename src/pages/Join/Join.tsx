@@ -6,7 +6,7 @@ import "@material-symbols/font-500";
 import { useEffect, useState } from "react";
 import Meetup from "../../models/meetup.model";
 import { Helmet } from "react-helmet";
-import { MeetupTitle } from "../../components/modules";
+import { MeetupTitle, NameInput } from "../../components/modules";
 import Participant from "../../models/participant.model";
 
 const Join = () => {
@@ -54,7 +54,12 @@ const Join = () => {
                     />
                 </section>
                 <section>
-
+                    <NameInput
+                        name={participant.name}
+                        onNameChange={(name) =>
+                            setParticipant({ ...participant, name })
+                        }
+                    />
                 </section>
                 <section className="py-7 px-4 flex flex-col gap-2 bg-lightgray w-full rounded-t-[40px]">
                     <section>

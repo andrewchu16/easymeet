@@ -4,5 +4,14 @@ import MeetupTitle from "./MeetupTitle/MeetupTitle";
 import TimeslotsEdit from "./TimeslotsEdit/TimeslotsEdit";
 import Contact from "./Contact/Contact";
 import ShareButton from "./ShareButton/ShareButton";
+import NameInput from "./NameInput/NameInput";
 
-export { AvailabilityEdit, Calendar, MeetupTitle, TimeslotsEdit, Contact, ShareButton };
+export {
+    AvailabilityEdit,
+    Calendar,
+    MeetupTitle,
+    TimeslotsEdit,
+    Contact,
+    ShareButton,
+    NameInput,
+};
