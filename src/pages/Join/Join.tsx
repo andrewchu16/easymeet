@@ -62,6 +62,11 @@ const Join = () => {
     const handleParticipantChange = async (newParticipant: Participant) => {
         console.log(newParticipant);
         setParticipant(newParticipant);
+        setParticipants(
+            participants.map((p) =>
+                p.name === newParticipant.name ? newParticipant : p
+            )
+        );
         await updateParticipant(app, participantId, newParticipant, meetup.id);
     };
 

@@ -23,7 +23,7 @@ const TimeslotItem = ({
         })
     );
 
-    const names = availableParticipants.map((participant) => participant.name).join(", ");
+    const names = availableParticipants.map((participant) => participant.name).sort().join(", ");
 
     return (
         <li
