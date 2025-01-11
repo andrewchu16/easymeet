@@ -25,13 +25,13 @@ service cloud.firestore {
       // Check timeslots are Map<string, string[]>
       let hasAvailability = "availability" in meetupData && meetupData.availability is map;
 
-      // todo: properly check the entire lists are homogeneous
       let availVals = meetupData.availability.values();
       let hasValidAvailability = hasAvailability && availVals.size() == 0 || (availVals[0] is list && (availVals[0].size() == 0 || availVals[0][0] is string));
 
       let hasTimeslots = "timeslots" in meetupData && meetupData.timeslots is map;
       let descVals = meetupData.timeslots.values();
-      let hasValidTimeslots = hasTimeslots && descVals.size() == 0 || descVals[0] is string;
+      let hasValidTimeslots = hasTimeslots && (descVals.size() == 0 || descVals[0] is list) 
+              && (descVals[0].size() == 2 && descVals[0][0] is string && descVals[0][1] is string);
 
       // Check participantNames is string[]
       let hasParticipantNames = "participantNames" in meetupData && meetupData.participantNames is list;

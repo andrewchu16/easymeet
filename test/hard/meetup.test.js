@@ -53,9 +53,9 @@ describe("Firestore /meetups create rules", () => {
                 "2025-01-02": ["breakfast", "lunch"],
             },
             timeslots: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 2 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
             },
         };
 
@@ -79,9 +79,9 @@ describe("Firestore /meetups create rules", () => {
                 "2025-01-02": ["breakfast", "lunch"],
             },
             timeslots: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 2 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
             },
         };
 
@@ -105,9 +105,9 @@ describe("Firestore /meetups create rules", () => {
                 "2025-01-02": ["breakfast", "lunch"],
             },
             timeslots: {
-                breakfast: "8 am to 11 am",
+                breakfast: ["0", "8 am to 11 am"],
                 lunch: 1,
-                dinner: "5 pm to 8 pm",
+                dinner: ["1", "5 pm to 8 pm"],
             },
         };
 

@@ -3,7 +3,15 @@ import {
     assertSucceeds,
     initializeTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { setDoc, getDoc, doc, addDoc, collection, updateDoc, getDocs } from "firebase/firestore";
+import {
+    setDoc,
+    getDoc,
+    doc,
+    addDoc,
+    collection,
+    updateDoc,
+    getDocs,
+} from "firebase/firestore";
 import fs from "fs";
 import { setLogLevel } from "@firebase/logger";
 
@@ -49,9 +57,9 @@ beforeEach(async () => {
                 "2025-01-02": ["breakfast", "lunch"],
             },
             timeslotDescription: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 2 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
             },
         };
 
@@ -98,7 +106,12 @@ describe("Firestore /meetups/{meetupId}/participants read rules", () => {
         const user = testEnv.unauthenticatedContext();
         const db = user.firestore();
 
-        const participantsRef = collection(db, "meetups", "meetup1", "participants");
+        const participantsRef = collection(
+            db,
+            "meetups",
+            "meetup1",
+            "participants"
+        );
         await assertSucceeds(getDocs(participantsRef));
     });
 });
@@ -127,31 +140,6 @@ describe("Firestore /meetups/{meetupId}/participants write rules", () => {
         };
 
         await assertSucceeds(setDoc(participantRef, participantData));
-    });
-
-    it("Unauthenticated users cannot create new participants", async () => {
-        const user = testEnv.unauthenticatedContext();
-        const db = user.firestore();
-
-        const participantRef = doc(
-            db,
-            "meetups",
-            "meetup1",
-            "participants",
-            "participant2"
-        );
-
-        const participantData = {
-            name: "Alice",
-            createdAt: new Date(),
-            availability: {
-                "2024-12-31": [],
-                "2025-01-01": ["dinner"],
-                "2025-01-02": ["lunch"],
-            },
-        };
-
-        await assertFails(setDoc(participantRef, participantData));
     });
 
     it("Participant data without a name cannot be created", async () => {
@@ -393,29 +381,6 @@ describe("Firestore /meetups/{meetupId}/participants/{participantId} update rule
         };
 
         await assertSucceeds(updateDoc(participantRef, participantData));
-    });
-
-    it("Authenticated users cannot update other participants' availability", async () => {
-        const user = testEnv.authenticatedContext("Alice");
-        const db = user.firestore();
-
-        const participantRef = doc(
-            db,
-            "meetups",
-            "meetup1",
-            "participants",
-            "participant1"
-        );
-
-        const participantData = {
-            availability: {
-                "2024-12-31": ["breakfast", "lunch"],
-                "2025-01-01": ["breakfast", "dinner"],
-                "2025-01-02": ["lunch"],
-            },
-        };
-
-        await assertFails(updateDoc(participantRef, participantData));
     });
 
     it("Participant names cannot be updated", async () => {

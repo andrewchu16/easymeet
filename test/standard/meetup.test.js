@@ -60,9 +60,9 @@ describe("Firestore /meetups create rules", () => {
                 "2025-01-02": ["breakfast", "lunch"],
             },
             timeslots: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 2 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
             },
         };
 
@@ -90,7 +90,7 @@ describe("Firestore /meetups create rules", () => {
                 dinner: "5 pm to 8 pm",
             },
         };
-        
+
         const docRef = doc(db, "meetups", "meetup1");
 
         await assertFails(setDoc(docRef, meetupData));
@@ -182,9 +182,9 @@ describe("Firestore /meetups create rules", () => {
             createdAt: new Date(),
             participantNames: ["John", "Alice"],
             timeslots: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 2 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
             },
         };
 
@@ -208,9 +208,9 @@ describe("Firestore /meetups create rules", () => {
                 "2025-01-02": ["breakfast", "lunch"],
             },
             timeslots: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 2 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
             },
         };
 
@@ -234,9 +234,9 @@ describe("Firestore /meetups create rules", () => {
                 "2025-01-02": ["breakfast", "lunch"],
             },
             timeslots: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 2 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
             },
         };
 
@@ -282,8 +282,8 @@ describe("Firestore /meetups create rules", () => {
             },
             timeslots: {
                 breakfast: 0,
-                lunch: "11 am to 2 pm",
-                dinner: "5 pm to 8 pm",
+                lunch: ["1", "11 am to 2 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
             },
         };
 
@@ -307,9 +307,9 @@ describe("Firestore /meetups create rules", () => {
                 "2025-01-02": ["breakfast", "lunch"],
             },
             timeslots: {
-                breakfast: "8 am to 11 am",
-                lunch: "11 am to 3 pm",
-                dinner: "5 pm to 8 pm",
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 3 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
             },
             foo: "bar",
         };
