@@ -13,7 +13,6 @@ const AvailabilityEdit = ({
     const enabledAvailabilities = availability.filter(
         (availValue) => availValue.enabled
     );
-    
 
     const setEnableAll = (isEnabled: boolean) => {
         const newAvailabilities = availability.map((availValue) => {
@@ -28,26 +27,35 @@ const AvailabilityEdit = ({
             };
         });
         onAvailabilityChange(newAvailabilities);
-    }
-
+    };
 
     return (
         <>
             <div className="text-dark flex gap-2 justify-center mb-0.5">
-                <button className="font-semibold active:font-bold" onClick={() => setEnableAll(true)}>
+                <button
+                    className="font-semibold active:font-bold"
+                    onClick={() => setEnableAll(true)}
+                >
                     Select all
                 </button>
-                <button className="font-semibold active:font-bold" onClick={() => setEnableAll(false)}>
+                <button
+                    className="font-semibold active:font-bold"
+                    onClick={() => setEnableAll(false)}
+                >
                     Deselect all
                 </button>
             </div>
             <ul className="flex flex-col gap-4 w-full">
-                {enabledAvailabilities.map((availValue, index) => (
+                {enabledAvailabilities.map((availValue) => (
                     <DayAvailability
                         availability={availValue}
                         onAvailabilityChange={(newAvailability) => {
-                            const newAvailabilities = [...availability];
-                            newAvailabilities[index] = newAvailability;
+                            const newAvailabilities = availability.map((availValue) => {
+                                if (availValue.id === newAvailability.id) {
+                                    return newAvailability;
+                                }
+                                return availValue;
+                            });
                             onAvailabilityChange(newAvailabilities);
                         }}
                         key={availValue.id}

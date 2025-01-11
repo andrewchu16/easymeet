@@ -25,9 +25,10 @@ const DayAvailability = ({
         return formattedDate;
     };
 
-    const handleTimeslotEnableChange = (enabled: boolean, id: string) => {
+    const handleTimeslotEnableChange = (enabled: boolean, timeslotInfoId: string) => {
         const newTimeslotInfo = availability.timeslots.map((info) => {
-            if (info.id === id) {
+            if (info.id === timeslotInfoId) {
+                console.log(info);
                 return {
                     ...info,
                     enabled,

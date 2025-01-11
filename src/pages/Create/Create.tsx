@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Timeslot } from "../../models/timeslot.model";
 import { Availability, TimeslotInfo } from "../../models/availability.model";
 import { defaultTimeslots } from "../../data/timeslots";
@@ -27,6 +27,14 @@ const Create = () => {
     const handleTitleChange = (event: React.FormEvent<HTMLDivElement>) => {
         setMeetupTitle(event.currentTarget.textContent || "");
     };
+
+    useEffect(() => {
+        console.log({
+            availability,
+            dates,
+            timeslots,
+        });
+    }, [availability, dates, timeslots]);
 
     const handleDatesChange = (newDates: Date[]) => {
         newDates.sort((a, b) => a.getTime() - b.getTime());
@@ -137,7 +145,7 @@ const Create = () => {
         );
 
         console.log(meetupData);
-        
+
         await createMeetup(app, meetupData);
 
         navigate(`/share/${meetupData.id}?new=true`);
@@ -181,7 +189,10 @@ const Create = () => {
                             availability={availability}
                             onAvailabilityChange={handleAvailabilityChange}
                         />
-                        <button className="w-full py-3 my-8 mb-6 bg-primary text-white rounded-[10px] active:bg-secondary active:text-body transition-all" onClick={handleCreateMeetup}>
+                        <button
+                            className="w-full py-3 my-8 mb-6 bg-primary text-white rounded-[10px] active:bg-secondary active:text-body transition-all"
+                            onClick={handleCreateMeetup}
+                        >
                             Let's meet!
                         </button>
                     </section>
