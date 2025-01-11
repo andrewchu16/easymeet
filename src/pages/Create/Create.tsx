@@ -15,6 +15,7 @@ import {
 } from "../../firebase/firebaseManager";
 import { app } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Create = () => {
     const [meetupTitle, setMeetupTitle] = useState("New Meetup");
@@ -141,54 +142,72 @@ const Create = () => {
         navigate(`/share/${meetupData.id}?new=true`);
     };
 
+    const DESCRIPTION =
+        "Create a new meetup to share with your friends with EasyMeet, a mobile-friendly scheduling app.";
+    const TITLE = "Create Meetup - EasyMeet";
+
     return (
-        <div className="flex flex-col items-center gap-2">
-            <div className="flex justify-center mb-4">
-                <MeetupTitle
-                    editable
-                    handleChange={handleTitleChange}
-                    title={meetupTitle}
-                />
-            </div>
-            <div className="px-4 w-full flex flex-col gap-5 max-w-[500px]">
-                <section className="w-full flex flex-col items-center gap-3">
-                    <h2 className="text-lg text-body font-medium">
-                        Select dates for{" "}
-                        <span className="font-semibold">{meetupTitle}</span>
-                    </h2>
-                    <Calendar dates={dates} onDatesChange={handleDatesChange} />
-                </section>
-                {dates.length > 0 && (
+        <>
+            <Helmet>
+                <title>{TITLE}</title>
+                <meta property="og:title" content={TITLE} />
+                <meta property="og:description" content={DESCRIPTION} />
+                <meta property="description" content={DESCRIPTION} />
+                <meta property="og:url" content="https://easymeet.ca" />
+            </Helmet>
+            <div className="flex flex-col items-center gap-2">
+                <div className="flex justify-center mb-4">
+                    <MeetupTitle
+                        editable
+                        handleChange={handleTitleChange}
+                        title={meetupTitle}
+                    />
+                </div>
+                <div className="px-4 w-full flex flex-col gap-5 max-w-[500px]">
                     <section className="w-full flex flex-col items-center gap-3">
                         <h2 className="text-lg text-body font-medium">
-                            Choose timeslots for{" "}
+                            Select dates for{" "}
                             <span className="font-semibold">{meetupTitle}</span>
                         </h2>
-                        <TimeslotsEdit
-                            timeslots={timeslots}
-                            onTimeslotsChange={handleTimeslotChange}
+                        <Calendar
+                            dates={dates}
+                            onDatesChange={handleDatesChange}
                         />
                     </section>
-                )}
-                {dates.length > 0 && timeslots.length > 0 && (
-                    <section className="py-7 px-4  bg-lightgray w-full rounded-t-[40px]">
-                        <h2 className="text-lg text-body text-center">
-                            Timeslots Available
-                        </h2>
-                        <AvailabilityEdit
-                            availability={availability}
-                            onAvailabilityChange={handleAvailabilityChange}
-                        />
-                        <button
-                            className="w-full py-3 my-8 mb-6 bg-primary text-white rounded-[10px] active:bg-secondary active:text-body transition-all"
-                            onClick={handleCreateMeetup}
-                        >
-                            Let's meet!
-                        </button>
-                    </section>
-                )}
+                    {dates.length > 0 && (
+                        <section className="w-full flex flex-col items-center gap-3">
+                            <h2 className="text-lg text-body font-medium">
+                                Choose timeslots for{" "}
+                                <span className="font-semibold">
+                                    {meetupTitle}
+                                </span>
+                            </h2>
+                            <TimeslotsEdit
+                                timeslots={timeslots}
+                                onTimeslotsChange={handleTimeslotChange}
+                            />
+                        </section>
+                    )}
+                    {dates.length > 0 && timeslots.length > 0 && (
+                        <section className="py-7 px-4  bg-lightgray w-full rounded-t-[40px]">
+                            <h2 className="text-lg text-body text-center">
+                                Timeslots Available
+                            </h2>
+                            <AvailabilityEdit
+                                availability={availability}
+                                onAvailabilityChange={handleAvailabilityChange}
+                            />
+                            <button
+                                className="w-full py-3 my-8 mb-6 bg-primary text-white rounded-[10px] active:bg-secondary active:text-body transition-all"
+                                onClick={handleCreateMeetup}
+                            >
+                                Let's meet!
+                            </button>
+                        </section>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

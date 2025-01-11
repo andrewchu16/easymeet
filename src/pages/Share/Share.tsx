@@ -6,6 +6,7 @@ import ConfettiExplosion from "react-confetti-explosion";
 import "@material-symbols/font-500";
 import { useEffect, useState } from "react";
 import Meetup from "../../models/meetup.model";
+import { Helmet } from "react-helmet";
 
 const Share = () => {
     const { meetId } = useParams();
@@ -36,49 +37,63 @@ const Share = () => {
         }
     };
 
+    const TITLE = `Share ${meetup.name} - EasyMeet`;
+    const DESCRIPTION = `Share ${meetup.name} on EasyMeet!`;
+
     return (
-        <div className="flex flex-col items-center justify-center h-screen w-screen absolute top-0 left-0 p-10 gap-2">
-            {isNew && (
-                <ConfettiExplosion
-                    duration={2300}
-                    force={0.6}
-                    particleCount={80}
-                    width={500}
-                />
-            )}
-            <span className="text-3xl">🥳🎊</span>
-            <h1 className="text-dark text-center font-bold text-2xl">
-                {meetup.name} Created!
-            </h1>
-            <p className="text-body text-center">
-                Share this link with your friends to get started!
-            </p>
-            <span className="text-body flex items-center gap-3 bg-light shadow-md px-4 py-3 rounded-lg">
-                <a
-                    href={`https://easymeet.ca/join/${meetId}`}
-                    className="underline hover:font-semibold active:font-semibold"
-                    id="share-link"
-                >
-                    easymeet.ca/join/{meetId}
-                </a>
-                <span
-                    onClick={() => {
-                        if (!justCopied) {
-                            copyShareLink();
-                            setJustCopied(true);
-                            setTimeout(() => {
-                                setJustCopied(false);
-                            }, 1000);
-                        }
-                    }}
-                    className={`select-none ${
-                        justCopied ? "font-semibold" : "material-symbols-rounded"
-                    }`}
-                >
-                    {justCopied ? "Copied!" : "content_copy"}
+        <>
+            <Helmet>
+                <title>{TITLE}</title>
+                <meta property="og:title" content={TITLE} />
+                <meta property="og:description" content={DESCRIPTION} />
+                <meta property="description" content={DESCRIPTION} />
+                <meta property="og:url" content="https://easymeet.ca" />
+            </Helmet>
+            <div className="flex flex-col items-center justify-center h-screen w-screen absolute top-0 left-0 p-10 gap-2">
+                {isNew && (
+                    <ConfettiExplosion
+                        duration={2300}
+                        force={0.6}
+                        particleCount={80}
+                        width={500}
+                    />
+                )}
+                <span className="text-3xl">🥳🎊</span>
+                <h1 className="text-dark text-center font-bold text-2xl">
+                    {meetup.name} Created!
+                </h1>
+                <p className="text-body text-center">
+                    Share this link with your friends to get started!
+                </p>
+                <span className="text-body flex items-center gap-3 bg-light shadow-md px-4 py-3 rounded-lg">
+                    <a
+                        href={`https://easymeet.ca/join/${meetId}`}
+                        className="underline hover:font-semibold active:font-semibold"
+                        id="share-link"
+                    >
+                        easymeet.ca/join/{meetId}
+                    </a>
+                    <span
+                        onClick={() => {
+                            if (!justCopied) {
+                                copyShareLink();
+                                setJustCopied(true);
+                                setTimeout(() => {
+                                    setJustCopied(false);
+                                }, 1000);
+                            }
+                        }}
+                        className={`select-none ${
+                            justCopied
+                                ? "font-semibold"
+                                : "material-symbols-rounded"
+                        }`}
+                    >
+                        {justCopied ? "Copied!" : "content_copy"}
+                    </span>
                 </span>
-            </span>
-        </div>
+            </div>
+        </>
     );
 };
 
