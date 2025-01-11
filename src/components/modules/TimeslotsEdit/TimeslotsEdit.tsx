@@ -83,7 +83,7 @@ const TimeslotsEdit = ({
                     className="rounded-full text-dark active:font-semibold hover:brightness-110 active:brightness-110 transition-all flex items-center justify-center h-12"
                     onClick={addTimeslot}
                 >
-                    <span style={{ fontSize: 22}}>add</span>
+                    <span className="material-symbols-rounded" style={{ fontSize: 22}}>add</span> Add timeslot
                 </button>
             </ul>
         </>
