@@ -5,7 +5,6 @@ import { doc, getDoc, getFirestore, setDoc } from "@firebase/firestore";
 import Meetup from "../models/meetup.model";
 import { getRandomId } from "../util/getRandomId";
 import FirebaseMeetupData from "../models/firebaseMeetup.model";
-import { app } from "./firebase";
 
 const convertFirebaseToMeetup = (
     data: FirebaseMeetupData,
