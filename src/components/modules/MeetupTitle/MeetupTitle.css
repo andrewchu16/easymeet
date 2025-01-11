@@ -11,7 +11,7 @@ div:has(> .meetup-title:focus) {
 }
 
 .meetup-title-icon {
-    @apply hover:font-bold font-semibold hover:cursor-pointer;
+    @apply hover:font-bold font-semibold hover:cursor-pointer hover:scale-105;
 }
 
 .meetup-title:focus + .meetup-title-icon {
