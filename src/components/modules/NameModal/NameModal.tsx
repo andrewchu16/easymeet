@@ -22,10 +22,10 @@ const NameModal = ({ handleNameChange }: NameModalProps) => {
                 show ? "" : "hidden"
             }`}
         >
-            <h1 className="text-body">Set Display Name</h1>
+            <h1 className="text-body">Set display name for this meeting</h1>
             <NameInput
                 onNameChange={(name) => {
-                    handleNameChange(name);
+                    handleNameChange(name.trim());
                     if (name !== "") {
                         dialogRef.current?.close();
                         setShow(false);
