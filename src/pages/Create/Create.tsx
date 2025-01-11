@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Timeslot } from "../../models/timeslot.model";
 import { Availability, TimeslotInfo } from "../../models/availability.model";
 import { defaultTimeslots } from "../../data/timeslots";
@@ -27,14 +27,6 @@ const Create = () => {
     const handleTitleChange = (event: React.FormEvent<HTMLDivElement>) => {
         setMeetupTitle(event.currentTarget.textContent || "");
     };
-
-    useEffect(() => {
-        console.log({
-            availability,
-            dates,
-            timeslots,
-        });
-    }, [availability, dates, timeslots]);
 
     const handleDatesChange = (newDates: Date[]) => {
         newDates.sort((a, b) => a.getTime() - b.getTime());
@@ -143,8 +135,6 @@ const Create = () => {
             availability,
             timeslots
         );
-
-        console.log(meetupData);
 
         await createMeetup(app, meetupData);
 
