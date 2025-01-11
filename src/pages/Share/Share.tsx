@@ -8,13 +8,13 @@ import "@material-symbols/font-700";
 import { useEffect, useState } from "react";
 import Meetup from "../../models/meetup.model";
 import { Helmet } from "react-helmet";
+import { ShareButton } from "../../components/modules";
 
 const Share = () => {
     const { meetId } = useParams();
     const [searchParams] = useSearchParams();
     const [meetup, setMeetup] = useState<Meetup | null>(null);
     const [loading, setLoading] = useState(true);
-    const [justCopied, setJustCopied] = useState(false);
 
     const isNew = searchParams.get("new") === "true";
 
@@ -30,13 +30,6 @@ const Share = () => {
     if (meetId === undefined || meetup === null) {
         return <>{!loading && <MeetNotFound id={meetId} />}</>;
     }
-
-    const copyShareLink = () => {
-        const shareLink = document.getElementById("share-link");
-        if (shareLink) {
-            navigator.clipboard.writeText(shareLink.textContent || "");
-        }
-    };
 
     const TITLE = `Share ${meetup.name} - EasyMeet`;
     const DESCRIPTION = `Share ${meetup.name} on EasyMeet!`;
@@ -66,43 +59,8 @@ const Share = () => {
                 <p className="text-body text-center">
                     Share this link with your friends to get started.
                 </p>
-                <span className="text-body flex items-center gap-3 bg-light shadow-md px-4 py-3 rounded-lg">
-                    <a
-                        href={`https://easymeet.ca/join/${meetId}`}
-                        className="underline hover:font-semibold active:font-semibold"
-                        id="share-link"
-                    >
-                        https://easymeet.ca/join/{meetId}
-                    </a>
-                    <span
-                        onClick={() => {
-                            if (!justCopied) {
-                                copyShareLink();
-                                setJustCopied(true);
-                                setTimeout(() => {
-                                    setJustCopied(false);
-                                }, 1000);
-                            }
-                        }}
-                        className={`select-none hover:font-bold ${
-                            justCopied
-                                ? "font-semibold"
-                                : "material-symbols-rounded"
-                        }`}
-                    >
-                        {justCopied ? "Copied!" : "content_copy"}
-                    </span>
-                </span>
+                <ShareButton url={`https://easymeet.ca/join/${meetup.id}`} />
             </div>
-            {/* pre-render bold icon */}
-            <span
-                className="absoslute opacity-0 material-symbols-rounded"
-                style={{
-                    fontWeight: 700,
-                }}
-            >
-                content_copy
-            </span>
         </>
     );
 };
