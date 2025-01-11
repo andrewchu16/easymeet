@@ -10,7 +10,7 @@ const TimeslotsView = ({ timeslots }: TimeslotsViewProp) => {
             <tbody>
                 {timeslots.map((timeslot) => (
                     <tr key={timeslot.id}>
-                        <td className="font-semibold text-dark pr-6">
+                        <td className="font-semibold text-dark">
                             {timeslot.name}
                         </td>
                         <td className="text-body">{timeslot.description}</td>
