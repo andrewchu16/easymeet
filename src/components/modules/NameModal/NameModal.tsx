@@ -21,6 +21,13 @@ const NameModal = ({ handleNameChange }: NameModalProps) => {
             className={`px-6 py-5 rounded-xl flex flex-col gap-1 backdrop:bg-dark/60 ${
                 show ? "" : "hidden"
             }`}
+            onKeyDown={(e) => {
+                console.log(e.key);
+                if (e.key === "Escape") {
+                    setShow(false);
+                    e.stopPropagation();
+                }
+            }}
         >
             <h1 className="text-body">Set display name for this meeting</h1>
             <NameInput
