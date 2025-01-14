@@ -7,7 +7,7 @@ import CalendarChevron from "./components/CalendarChevron";
 interface CalendarProps {
     dates: Date[];
     onDatesChange: (dates: Date[]) => void;
-    disabled: boolean;
+    disabled?: boolean;
 }
 
 const Calendar = ({
