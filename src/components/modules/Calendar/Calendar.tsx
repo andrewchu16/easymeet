@@ -7,14 +7,18 @@ import CalendarChevron from "./components/CalendarChevron";
 interface CalendarProps {
     dates: Date[];
     onDatesChange: (dates: Date[]) => void;
+    disabled: boolean;
 }
 
-const Calendar = ({ dates, onDatesChange }: CalendarProps) => {
+const Calendar = ({
+    dates,
+    onDatesChange,
+    disabled = false,
+}: CalendarProps) => {
     const defaultClassNames = getDefaultClassNames();
 
     // 5 years ago
     const startMonth = new Date();
-    startMonth.setFullYear(startMonth.getFullYear() - 5);
 
     // 10 years from now
     const endMonth = new Date();
@@ -29,6 +33,7 @@ const Calendar = ({ dates, onDatesChange }: CalendarProps) => {
             selected={dates}
             onSelect={onDatesChange}
             captionLayout="dropdown"
+            disabled={!disabled ? { before: new Date() } : () => false}
             showOutsideDays
             classNames={{
                 weekday: "cldr-weekday",

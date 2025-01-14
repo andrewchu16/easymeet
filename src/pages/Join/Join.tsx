@@ -26,6 +26,7 @@ const Join = () => {
     const [participant, setParticipant] = useState<Participant | null>(null);
     const [participantId, setParticipantId] = useState("");
     const [participants, setParticipants] = useState<Participant[]>([]);
+    const [dates, setDates] = useState<Date[]>([]);
 
     useEffect(() => {
         if (meetId) {
@@ -33,6 +34,9 @@ const Join = () => {
                 meetup?.availability.sort(
                     (a, b) => a.date.getTime() - b.date.getTime()
                 );
+
+                const newDates = meetup?.availability.map((a) => a.date) || [];
+                setDates(newDates);
                 setMeetup(meetup);
 
                 if (meetup !== null) {

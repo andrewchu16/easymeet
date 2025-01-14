@@ -35,6 +35,10 @@ const CalendarChevron = (props: ChevronProps) => {
             break;
     }
 
+    if (props.disabled) {
+        color = "var(--color-lightgray)";
+    }
+
     return (
         <span style={{
             fontSize: size,
