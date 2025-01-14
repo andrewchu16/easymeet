@@ -17,8 +17,10 @@ const Calendar = ({
 }: CalendarProps) => {
     const defaultClassNames = getDefaultClassNames();
 
-    // 5 years ago
-    const startMonth = new Date();
+    // the oldest date between the dates array and the current date
+    const startMonth = new Date(
+        Math.min(...dates.map((d) => d.getTime()), new Date().getTime())
+    );
 
     // 10 years from now
     const endMonth = new Date();
@@ -48,6 +50,7 @@ const Calendar = ({
                 nav: "cldr-nav",
                 outside: "cldr-outside",
                 dropdown: `${defaultClassNames.dropdown} cldr-dropdown`,
+                disabled: "cldr-disabled",
                 dropdowns: `${defaultClassNames.dropdowns} cldr-dropdowns`,
             }}
             components={{

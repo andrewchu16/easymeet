@@ -53,3 +53,7 @@
 .cldr-dropdowns {
     @apply flex gap-2;
 }
+
+.cldr-day.cldr-disabled {
+    @apply text-gray-300 brightness-75;
+}
