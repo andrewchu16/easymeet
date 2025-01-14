@@ -22,7 +22,6 @@ const NameModal = ({ handleNameChange }: NameModalProps) => {
                 show ? "" : "hidden"
             }`}
             onKeyDown={(e) => {
-                console.log(e.key);
                 if (e.key === "Escape") {
                     setShow(false);
                     e.stopPropagation();
