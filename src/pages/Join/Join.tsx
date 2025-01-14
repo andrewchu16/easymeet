@@ -13,6 +13,7 @@ import Meetup from "../../models/meetup.model";
 import { Helmet } from "react-helmet";
 import {
     AvailabilityView,
+    Calendar,
     MeetupTitle,
     NameModal,
     TimeslotsView,
@@ -88,7 +89,7 @@ const Join = () => {
                 <meta property="og:url" content="https://easymeet.ca" />
                 <meta name="robots" content="noindex" />
             </Helmet>
-            <main className="flex flex-col px-4 items-center gap-2">
+            <main className="flex flex-col px-4 items-center gap-4">
                 <section className="flex justify-center items-center my-4">
                     <MeetupTitle
                         editable={false}
@@ -96,7 +97,9 @@ const Join = () => {
                         title={meetup.name}
                     />
                 </section>
-
+                <section className="mb-3">
+                    <Calendar dates={dates} disabled onDatesChange={() => {}} />
+                </section>
                 <section className="py-7 px-4 flex flex-col gap-2 bg-lightgray w-full rounded-t-[40px] max-w-[500px]">
                     <section className="flex flex-col gap-1">
                         <h2 className="text-lg text-body text-center">
