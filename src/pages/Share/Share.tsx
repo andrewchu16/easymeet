@@ -40,7 +40,7 @@ const Share = () => {
                 <title>{TITLE}</title>
                 <meta property="og:title" content={TITLE} />
                 <meta property="og:description" content={DESCRIPTION} />
-                <meta property="description" content={DESCRIPTION} />
+                <meta name="description" content={DESCRIPTION} />
                 <meta property="og:url" content="https://easymeet.ca" />
                 <meta name="robots" content="noindex" />
             </Helmet>
