@@ -22,6 +22,7 @@ const Create = () => {
     const [dates, setDates] = useState<Date[]>([]);
     const [timeslots, setTimeslots] = useState<Timeslot[]>(defaultTimeslots);
     const [availability, setAvailability] = useState<Availability[]>([]);
+    const [submitError, setSubmitError] = useState("");
 
     const navigate = useNavigate();
 
@@ -127,10 +128,24 @@ const Create = () => {
     };
 
     const handleAvailabilityChange = (newAvailability: Availability[]) => {
+        if (newAvailability.some((availValue) => availValue.timeslots.some((t) => t.enabled))) {
+            setSubmitError("");
+        }
         setAvailability(newAvailability);
     };
 
     const handleCreateMeetup = async () => {
+        if (
+            availability.every(
+                (availValue) =>
+                    !availValue.enabled ||
+                    availValue.timeslots.every((t) => !t.enabled)
+            )
+        ) {
+            setSubmitError("Please select at least one timeslot to meet.");
+            return;
+        }
+
         const meetupData = createNewMeetupData(
             meetupTitle,
             availability,
@@ -191,7 +206,7 @@ const Create = () => {
                         </section>
                     )}
                     {dates.length > 0 && timeslots.length > 0 && (
-                        <section className="py-7 px-4  bg-lightgray w-full rounded-t-[40px]">
+                        <section className="py-7 px-4 bg-lightgray w-full rounded-t-[40px]">
                             <h2 className="text-lg text-body text-center">
                                 Timeslots Available
                             </h2>
@@ -199,12 +214,19 @@ const Create = () => {
                                 availability={availability}
                                 onAvailabilityChange={handleAvailabilityChange}
                             />
-                            <button
-                                className="w-full py-3 my-8 mb-6 bg-primary text-white rounded-[10px] active:bg-secondary active:text-body transition-all"
-                                onClick={handleCreateMeetup}
-                            >
-                                Let's meet!
-                            </button>
+                            <div className="mt-4">
+                                {submitError && (
+                                    <p className="text-red-400 text-center -mt-1">
+                                        {submitError}
+                                    </p>
+                                )}
+                                <button
+                                    className="w-full py-3 mt-4 mb-6 bg-primary text-white rounded-[10px] active:bg-secondary active:text-body transition-all"
+                                    onClick={handleCreateMeetup}
+                                >
+                                    Let's meet!
+                                </button>
+                            </div>
                         </section>
                     )}
                 </div>
