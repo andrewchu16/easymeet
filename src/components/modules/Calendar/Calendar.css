@@ -12,6 +12,10 @@
     @apply text-light;
 }
 
+.cldr-day-button:hover {
+    @apply md:shadow-md md:transition-shadow;
+}
+
 .cldr-chevron {
     @apply active:scale-150 transition-transform;
 }

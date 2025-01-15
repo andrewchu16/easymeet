@@ -35,7 +35,12 @@ const Calendar = ({
             selected={dates}
             onSelect={onDatesChange}
             captionLayout="dropdown"
-            disabled={!disabled ? { before: new Date() } : (date: Date) => !dates.some((d) => d.getTime() === date.getTime())}
+            disabled={
+                !disabled
+                    ? { before: new Date() }
+                    : (date: Date) =>
+                          !dates.some((d) => d.getTime() === date.getTime())
+            }
             showOutsideDays
             classNames={{
                 weekday: "cldr-weekday",
