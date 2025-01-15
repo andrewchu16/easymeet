@@ -5,15 +5,29 @@ interface TimeslotsViewProp {
 }
 
 const TimeslotsView = ({ timeslots }: TimeslotsViewProp) => {
+    const noDescription = timeslots.every((timeslot) => !timeslot.description);
     return (
         <table className="table-fixed border-separate border-spacing-x-4">
             <tbody>
                 {timeslots.map((timeslot) => (
                     <tr key={timeslot.id}>
-                        <td className="font-semibold text-dark text-end">
-                            {timeslot.name}
-                        </td>
-                        <td className="text-begin text-body">{timeslot.description}</td>
+                        {noDescription ? (
+                            <td
+                                className="font-semibold text-dark text-center"
+                                colSpan={2}
+                            >
+                                {timeslot.name}
+                            </td>
+                        ) : (
+                            <>
+                                <td className="font-semibold text-dark text-end">
+                                    {timeslot.name}
+                                </td>
+                                <td className="text-begin text-body">
+                                    {timeslot.description}
+                                </td>
+                            </>
+                        )}
                     </tr>
                 ))}
             </tbody>
