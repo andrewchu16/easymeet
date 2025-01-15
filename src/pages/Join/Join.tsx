@@ -51,7 +51,7 @@ const Join = () => {
     }, [meetId]);
 
     if (meetId === undefined || meetup === null) {
-        return <>({!loading && <MeetNotFound id={meetId} />})</>;
+        return <>{!loading && <MeetNotFound id={meetId} />}</>;
     }
 
     const setName = async (name: string) => {
