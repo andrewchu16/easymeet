@@ -87,6 +87,7 @@ const Join = () => {
                 <meta property="og:description" content={DESCRIPTION} />
                 <meta name="description" content={DESCRIPTION} />
                 <meta property="og:url" content="https://easymeet.ca" />
+                <meta property="og:type" content="website" />
                 <meta name="robots" content="noindex" />
             </Helmet>
             <main className="flex flex-col px-4 items-center gap-4">

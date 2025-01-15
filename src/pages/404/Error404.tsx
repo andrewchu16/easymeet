@@ -9,6 +9,7 @@ const Error404 = () => {
                 <title>{TITLE}</title>
                 <meta property="og:title" content={TITLE} />
                 <meta property="og:url" content="https://easymeet.ca" />
+                <meta property="og:type" content="website" />
                 <meta name="robots" content="noindex" />
             </Helmet>
             <div className="flex flex-col items-center justify-center h-screen w-screen absolute -z-10 top-0 left-0 p-10 gap-2">

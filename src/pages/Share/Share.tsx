@@ -42,6 +42,7 @@ const Share = () => {
                 <meta property="og:description" content={DESCRIPTION} />
                 <meta name="description" content={DESCRIPTION} />
                 <meta property="og:url" content="https://easymeet.ca" />
+                <meta property="og:type" content="website" />
                 <meta name="robots" content="noindex" />
             </Helmet>
             <div className="flex flex-col items-center justify-center h-screen w-screen absolute top-0 left-0 p-10 -z-10 gap-2">

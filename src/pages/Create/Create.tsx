@@ -168,6 +168,7 @@ const Create = () => {
                 <meta property="og:title" content={TITLE} />
                 <meta property="og:description" content={DESCRIPTION} />
                 <meta name="description" content={DESCRIPTION} />
+                <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://easymeet.ca" />
             </Helmet>
             <div className="flex flex-col items-center gap-2">
