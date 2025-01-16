@@ -18,7 +18,7 @@ const NameModal = ({ handleNameChange }: NameModalProps) => {
     return (
         <dialog
             ref={dialogRef}
-            className={`px-10 py-8 rounded-xl flex flex-col gap-1 items-center backdrop:bg-dark/60 ${
+            className={`px-6 py-7 rounded-xl flex flex-col gap-1 items-center backdrop:bg-dark/60 ${
                 show ? "" : "hidden"
             }`}
             onKeyDown={(e) => {
@@ -28,8 +28,8 @@ const NameModal = ({ handleNameChange }: NameModalProps) => {
                 }
             }}
         >
-            <h1 className="text-dark text-lg font-semibold">Set display name for this meeting</h1>
-            <p className="text-body mb-4">This name will only be used for this meeting.</p>
+            <h1 className="text-dark text-lg font-semibold text-center">Set display name for this meeting</h1>
+            <p className="text-body mb-4 text-center">This name will only be used for this meeting.</p>
             <NameInput
                 onNameChange={(name) => {
                     handleNameChange(name.trim());
