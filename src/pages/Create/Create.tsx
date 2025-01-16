@@ -186,7 +186,7 @@ const Create = () => {
                 </div>
                 <div className="px-4 w-full flex flex-col gap-5 max-w-[500px]">
                     <section className="w-full flex flex-col items-center gap-3">
-                        <h2 className="text-lg text-body font-medium">
+                        <h2 className="text-lg text-body font-medium text-center">
                             Select dates for{" "}
                             <span className="font-semibold">
                                 "{meetupTitle}"
@@ -199,7 +199,7 @@ const Create = () => {
                     </section>
                     {dates.length > 0 && (
                         <section className="w-full flex flex-col items-center">
-                            <h2 className="text-lg text-body font-medium mb-0.5">
+                            <h2 className="text-lg text-body font-medium mb-0.5 text-center">
                                 Choose timeslots for{" "}
                                 <span className="font-semibold">
                                     "{meetupTitle}"
