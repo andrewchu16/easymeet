@@ -55,7 +55,6 @@ const MeetupTitle = ({
         let titleWidth = titleElement.getBoundingClientRect().width;
         let containerWidth =
             titleElement.parentElement?.getBoundingClientRect().width;
-        console.log(titleWidth, containerWidth);
         // Shrink font size until it fits in the container or reaches the minimum font size
         while (
             containerWidth &&

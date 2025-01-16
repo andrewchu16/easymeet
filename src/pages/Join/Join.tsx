@@ -65,7 +65,6 @@ const Join = () => {
     };
 
     const handleParticipantChange = async (newParticipant: Participant) => {
-        console.log(newParticipant);
         setParticipant(newParticipant);
         setParticipants(
             participants.map((p) =>
