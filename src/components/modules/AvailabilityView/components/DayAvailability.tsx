@@ -67,11 +67,11 @@ const DayAvailability = ({
         <li>
             <h2
                 key={availability.id}
-                className="text-xl font-semibold text-dark mb-2"
+                className="text-lg font-semibold text-body mb-1"
             >
                 {getReadableDate(availability.date)}
             </h2>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-1.5">
                 {availability.timeslots.map((info) => (
                     <TimeslotItem
                         timeslotName={info.name}
