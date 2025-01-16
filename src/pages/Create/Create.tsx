@@ -135,6 +135,11 @@ const Create = () => {
     };
 
     const handleCreateMeetup = async () => {
+        if (timeslots.some((t) => !t.name)) {
+            setSubmitError("Please fill in all timeslot names.");
+            return;
+        }
+
         if (
             availability.every(
                 (availValue) =>
@@ -193,13 +198,14 @@ const Create = () => {
                         />
                     </section>
                     {dates.length > 0 && (
-                        <section className="w-full flex flex-col items-center gap-3">
-                            <h2 className="text-lg text-body font-medium">
+                        <section className="w-full flex flex-col items-center">
+                            <h2 className="text-lg text-body font-medium mb-0.5">
                                 Choose timeslots for{" "}
                                 <span className="font-semibold">
                                     "{meetupTitle}"
                                 </span>
                             </h2>
+                            <p className="text-body mb-2">Descriptions are optional.</p>
                             <TimeslotsEdit
                                 timeslots={timeslots}
                                 onTimeslotsChange={handleTimeslotChange}
@@ -222,7 +228,7 @@ const Create = () => {
                                     </p>
                                 )}
                                 <button
-                                    className="w-full py-3 mt-4 mb-6 bg-primary text-white rounded-[10px] active:bg-secondary active:text-body transition-all"
+                                    className="w-full py-3 mt-4 mb-6 bg-primary text-white rounded-[10px] active:bg-secondary transition-all duration-75"
                                     onClick={handleCreateMeetup}
                                 >
                                     Let's meet!
