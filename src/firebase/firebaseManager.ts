@@ -69,7 +69,7 @@ const convertFirebaseToMeetup = (
     return meetup;
 };
 
-const convertMeetupToFirebase = (meetup: Meetup): FirebaseMeetupData => {
+const convertMeetupToFirebase = (meetup: Meetup, version: string): FirebaseMeetupData => {
     const meetupAvailability = meetup.availability.reduce((acc, curr) => {
         if (curr.enabled) {
             acc[curr.date.toISOString()] = curr.timeslots
@@ -90,6 +90,7 @@ const convertMeetupToFirebase = (meetup: Meetup): FirebaseMeetupData => {
         availability: meetupAvailability,
         timeslots: meetupTimeslots,
         participantNames: meetup.participantNames,
+        version: version
     };
 
     return meetupData;
@@ -112,8 +113,8 @@ const createNewMeetupData = (
     return meetup;
 };
 
-const createMeetup = async (app: FirebaseApp, meetup: Meetup) => {
-    const meetupData = convertMeetupToFirebase(meetup);
+const createMeetup = async (app: FirebaseApp, meetup: Meetup, version="1.0") => {
+    const meetupData = convertMeetupToFirebase(meetup, version);
     const db = getFirestore(app);
     const docRef = doc(db, "meetups", meetup.id);
 

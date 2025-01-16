@@ -7,7 +7,6 @@ import {
     setDoc,
     getDoc,
     doc,
-    addDoc,
     collection,
     getDocs,
 } from "firebase/firestore";
@@ -64,6 +63,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: ["1", "11 am to 2 pm"],
                 dinner: ["2", "5 pm to 8 pm"],
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -89,6 +89,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: "11 am to 2 pm",
                 dinner: "5 pm to 8 pm",
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -114,6 +115,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: "11 am to 2 pm",
                 dinner: "5 pm to 8 pm",
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -139,6 +141,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: "11 am to 2 pm",
                 dinner: "5 pm to 8 pm",
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -165,6 +168,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: "11 am to 2 pm",
                 dinner: "5 pm to 8 pm",
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -186,6 +190,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: ["1", "11 am to 2 pm"],
                 dinner: ["2", "5 pm to 8 pm"],
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -212,6 +217,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: ["1", "11 am to 2 pm"],
                 dinner: ["2", "5 pm to 8 pm"],
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -238,6 +244,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: ["1", "11 am to 2 pm"],
                 dinner: ["2", "5 pm to 8 pm"],
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -259,6 +266,7 @@ describe("Firestore /meetups create rules", () => {
                 "2025-01-01": ["breakfast", "dinner"],
                 "2025-01-02": ["breakfast", "lunch"],
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -285,6 +293,60 @@ describe("Firestore /meetups create rules", () => {
                 lunch: ["1", "11 am to 2 pm"],
                 dinner: ["2", "5 pm to 8 pm"],
             },
+            version: "1.0"
+        };
+
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
+    });
+
+    it("Meetups without a version cannot be created", async () => {
+        // Create an anonymous authenticated user
+        const anonUser = testEnv.authenticatedContext("anon");
+        const db = anonUser.firestore();
+
+        const meetupData = {
+            name: "Meetup #1",
+            createdAt: new Date(),
+            participantNames: ["John", "Alice"],
+            availability: {
+                "2024-12-31": ["breakfast", "lunch", "dinner"],
+                "2025-01-01": ["breakfast", "dinner"],
+                "2025-01-02": ["breakfast", "lunch"],
+            },
+            timeslots: {
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 3 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
+            },
+        };
+
+        const docRef = doc(db, "meetups", "meetup1");
+
+        await assertFails(setDoc(docRef, meetupData));
+    });
+
+    it("Meetups with a non-string version cannot be created", async () => {
+        // Create an anonymous authenticated user
+        const anonUser = testEnv.authenticatedContext("anon");
+        const db = anonUser.firestore();
+
+        const meetupData = {
+            name: "Meetup #1",
+            createdAt: new Date(),
+            participantNames: ["John", "Alice"],
+            availability: {
+                "2024-12-31": ["breakfast", "lunch", "dinner"],
+                "2025-01-01": ["breakfast", "dinner"],
+                "2025-01-02": ["breakfast", "lunch"],
+            },
+            timeslots: {
+                breakfast: ["0", "8 am to 11 am"],
+                lunch: ["1", "11 am to 3 pm"],
+                dinner: ["2", "5 pm to 8 pm"],
+            },
+            version: 1.0
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -312,6 +374,7 @@ describe("Firestore /meetups create rules", () => {
                 dinner: ["2", "5 pm to 8 pm"],
             },
             foo: "bar",
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");

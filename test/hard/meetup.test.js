@@ -57,6 +57,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: ["1", "11 am to 2 pm"],
                 dinner: ["2", "5 pm to 8 pm"],
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -83,6 +84,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: ["1", "11 am to 2 pm"],
                 dinner: ["2", "5 pm to 8 pm"],
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");
@@ -109,6 +111,7 @@ describe("Firestore /meetups create rules", () => {
                 lunch: 1,
                 dinner: ["1", "5 pm to 8 pm"],
             },
+            version: "1.0"
         };
 
         const docRef = doc(db, "meetups", "meetup1");

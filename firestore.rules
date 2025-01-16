@@ -33,11 +33,14 @@ service cloud.firestore {
       let hasValidTimeslots = hasTimeslots && (descVals.size() == 0 || descVals[0] is list) 
               && (descVals[0].size() == 2 && descVals[0][0] is string && descVals[0][1] is string);
 
+      // Check version is string
+      let hasVersion = "version" in meetupData && meetupData.version is string;
+
       // Check participantNames is string[]
       let hasParticipantNames = "participantNames" in meetupData && meetupData.participantNames is list;
       let hasValidParticipantNames = hasParticipantNames && meetupData.participantNames.size() == 0 || meetupData.participantNames[0] is string;
 
-      return hasName && hasCreatedAt && hasValidAvailability && hasValidTimeslots && hasValidParticipantNames;
+      return hasName && hasCreatedAt && hasValidAvailability && hasValidTimeslots && hasVersion && hasValidParticipantNames;
     }
 
     // Check if the data matches the participant schema
@@ -66,7 +69,7 @@ service cloud.firestore {
       // Allow creation of meetups if
       // - the user is creating a new meetup
       // - the user is creating a valid meetup
-      allow write: if !exists(/databases/$(database)/documents/users/$(request.resource.id)) && onlyCreates(["createdAt", "name", "participantNames", "availability", "timeslots"]) && isValidMeetup(request.resource.data);
+      allow write: if !exists(/databases/$(database)/documents/users/$(request.resource.id)) && onlyCreates(["createdAt", "name", "participantNames", "availability", "timeslots", "version"]) && isValidMeetup(request.resource.data);
     }
 
     match /meetups/{meetupId}/participants/{participantId} {
