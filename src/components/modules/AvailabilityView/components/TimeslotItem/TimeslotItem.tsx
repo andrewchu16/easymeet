@@ -42,7 +42,7 @@ const TimeslotItem = ({
                 </span>
                 <div>
                     <h2 className="text-dark font-medium leading-snug">{timeslotName}</h2>
-                    <p className="text-body text-sm -mt-0.5 leading-[1.1]">{names}</p>
+                    <p className="text-body text-sm -mt-0.5 leading-[1.1] text-ellipsis overflow-hidden max-h-[4rem]">{names}</p>
                 </div>
             </label>
         </li>
