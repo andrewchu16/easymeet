@@ -32,16 +32,60 @@ const MeetupTitle = ({
         range.collapse(false);
         selection?.removeAllRanges();
         selection?.addRange(range);
+
+        // Reset font size
+        if (!titleRef.current) {
+            return;
+        }
+    };
+
+    const adjustFontSize = () => {
+        const titleElement = titleRef.current;
+        if (!titleElement) {
+            return;
+        }
+
+        // Reset font size
+        let titleFontSize = 36;
+        titleElement.style.fontSize = `${titleFontSize}px`;
+        titleElement.style.maxWidth = "unset";
+        titleElement.style.width = "fit-content";
+        titleElement.style.textWrap = "nowrap";
+
+        let titleWidth = titleElement.getBoundingClientRect().width;
+        let containerWidth =
+            titleElement.parentElement?.getBoundingClientRect().width;
+        console.log(titleWidth, containerWidth);
+        // Shrink font size until it fits in the container or reaches the minimum font size
+        while (
+            containerWidth &&
+            titleWidth > containerWidth &&
+            titleFontSize > 16
+        ) {
+            titleFontSize--;
+            titleElement.style.fontSize = `${titleFontSize}px`;
+            titleWidth = titleElement.getBoundingClientRect().width;
+            containerWidth =
+                titleElement.parentElement?.getBoundingClientRect().width;
+        }
+
+        titleElement.style.width = "unset";
+        titleElement.style.textWrap = "wrap";
+        titleElement.style.maxWidth = "100%";
+
     };
 
     return (
-        <div className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 meetup-title-container ml-6">
+        <div className="flex items-center justify-center gap-2 rounded-lg px-2.5 py-1.5 meetup-title-container ml-6 max-w-[350px]">
             <h1
                 ref={titleRef}
                 suppressContentEditableWarning
                 contentEditable={editable}
                 className={"meetup-title" + (editable ? " is-editable" : "")}
-                onBlur={handleChange}
+                onBlur={(event) => {
+                    handleChange(event);
+                    adjustFontSize();
+                }}
                 onKeyDown={handleEnterKey}
             >
                 {title}

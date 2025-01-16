@@ -3,7 +3,11 @@
 }
 
 .meetup-title {
-    @apply text-4xl font-bold focus:outline-none focus:bg-lightgray;
+    @apply text-4xl font-bold focus:outline-none focus:bg-lightgray max-w-full text-center;
+}
+
+.meetup-title:focus {
+    max-width: unset;
 }
 
 div:has(> .meetup-title:focus) {
