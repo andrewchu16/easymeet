@@ -67,7 +67,7 @@ const DayAvailability = ({
         <li>
             <h2
                 key={availability.id}
-                className="text-lg font-semibold text-body mb-1"
+                className="text-base font-semibold text-body mb-1"
             >
                 {getReadableDate(availability.date)}
             </h2>

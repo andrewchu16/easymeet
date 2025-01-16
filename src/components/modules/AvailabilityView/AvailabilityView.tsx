@@ -58,7 +58,7 @@ const AvailabilityView = ({
                     Deselect all
                 </button>
             </div>
-            <ul className="flex flex-col gap-2 w-full">
+            <ul className="flex flex-col gap-3 w-full">
                 {meetup.availability.map((availValue) => (
                     <DayAvailability
                         availability={availValue}
