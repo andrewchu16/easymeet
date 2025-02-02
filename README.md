@@ -21,4 +21,4 @@ EasyMeet is a mobile-friendly scheduling app for planning events with friends!
 
 ## Links
 
-Check out [When2Meet vs. LettuceMeet: a case study in UI and aesthetics]([url](https://uxdesign.cc/when2meet-vs-lettucemeet-a-case-study-in-ui-and-aesthetics-9d80402eee54)), some of the inspiration for my design.
+Check out [When2Meet vs. LettuceMeet: a case study in UI and aesthetics](https://uxdesign.cc/when2meet-vs-lettucemeet-a-case-study-in-ui-and-aesthetics-9d80402eee54), some of the inspiration for my design.
