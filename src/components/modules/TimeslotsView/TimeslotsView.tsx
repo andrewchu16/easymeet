@@ -1,4 +1,5 @@
 import { Timeslot } from "../../../models/timeslot.model";
+import "./TimeslotsView.css";
 
 interface TimeslotsViewProp {
     timeslots: Timeslot[];
@@ -7,31 +8,30 @@ interface TimeslotsViewProp {
 const TimeslotsView = ({ timeslots }: TimeslotsViewProp) => {
     const noDescription = timeslots.every((timeslot) => !timeslot.description);
     return (
-        <table className="table-fixed">
-            <tbody>
+        <div className="flex justify-center">
+            <div className="grid auto-rows-auto timeslots-container gap-x-2">
                 {timeslots.map((timeslot) => (
-                    <tr key={timeslot.id}>
+                    <>
                         {noDescription ? (
-                            <td
-                                className="font-semibold text-dark text-center"
-                                colSpan={2}
+                            <h3
+                                className="font-semibold text-dark text-center col-span-2"
                             >
                                 {timeslot.name}
-                            </td>
+                            </h3>
                         ) : (
                             <>
-                                <td className="font-semibold text-dark text-end w-1/2">
+                                <h3 className="font-semibold text-dark text-end col-span-1">
                                     {timeslot.name}
-                                </td>
-                                <td className="text-begin text-body w-1/2 pl-2">
+                                </h3>
+                                <p className="text-begin text-body col-span-1">
                                     {timeslot.description}
-                                </td>
+                                </p>
                             </>
                         )}
-                    </tr>
+                    </>
                 ))}
-            </tbody>
-        </table>
+            </div>
+        </div>
     );
 };
 
